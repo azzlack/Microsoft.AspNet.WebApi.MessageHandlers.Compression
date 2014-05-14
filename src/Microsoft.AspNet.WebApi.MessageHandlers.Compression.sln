@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackage", "NuGetPackage\NuGetPackage.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.WebApi.MessageHandlers.Compression", "Microsoft.AspNet.WebApi.MessageHandlers.Compression\Microsoft.AspNet.WebApi.MessageHandlers.Compression.csproj", "{56E19FF7-9AC7-48C5-9AC2-105F55AA16E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56E19FF7-9AC7-48C5-9AC2-105F55AA16E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56E19FF7-9AC7-48C5-9AC2-105F55AA16E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56E19FF7-9AC7-48C5-9AC2-105F55AA16E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56E19FF7-9AC7-48C5-9AC2-105F55AA16E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

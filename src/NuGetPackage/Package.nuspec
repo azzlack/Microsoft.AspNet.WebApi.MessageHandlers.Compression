@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Microsoft.AspNet.WebApi.MessageHandlers.Compression</id>
+    <version>1.0.0-RC</version>
+    <title>Microsoft ASP.NET Web API Compression Support</title>
+    <authors>Ove Andersen</authors>
+    <owners>EyeCatch</owners>
+    <description>
+      Drop-in module for ASP.NET Web API that enables GZip and Deflate support for incoming and outgoing messages. 
+Please note that this is not an official Microsoft package.
+      
+Supported Platforms:
+- .NET Framework 4.5
+- Windows 8
+- Windows Phone 8.1
+- Windows Phone Silverlight 8
+- Portable Class Libraries
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>
+      Drop-in module for ASP.NET Web API that enables GZip and Deflate support for incoming and outgoing messages. Please note that this is not an official Microsoft package.
+    </summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+    <copyright>Copyright EyeCatch 2014</copyright>
+    <dependencies>
+      <group>
+        <dependency id="Microsoft.Net.Http" version="2.2.22" />
+        <dependency id="Microsoft.Bcl.Compression" version="3.9.83" />
+      </group>
+    </dependencies>
+    <references></references>
+    <tags>aspnet webapi aspnetwebapi compression gzip deflate</tags>
+  </metadata>
+  <files>
+    <file src="lib\" target="lib" />
+    <file src="tools\" target="tools" />
+    <file src="content\" target="content" />
+  </files>
+</package>
