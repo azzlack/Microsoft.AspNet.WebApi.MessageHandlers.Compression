@@ -97,6 +97,7 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>XCOPY "$(SolutionDir)Microsoft.AspNet.WebApi.MessageHandlers.Compression\bin\$(ConfigurationName)\Microsoft.AspNet.WebApi.MessageHandlers.Compression.*" "$(ProjectDir)lib\portable-net45+win+wpa81+wp80\" /s /y</PreBuildEvent>
+    <PreBuildEvent>XCOPY "$(SolutionDir)Microsoft.AspNet.WebApi.MessageHandlers.Compression\bin\$(ConfigurationName)\Microsoft.AspNet.WebApi.MessageHandlers.Compression.dll" "$(ProjectDir)lib\portable-net45+win+wpa81+wp80\" /s /y
+XCOPY "$(SolutionDir)Microsoft.AspNet.WebApi.MessageHandlers.Compression\bin\$(ConfigurationName)\Microsoft.AspNet.WebApi.MessageHandlers.Compression.pdb" "$(ProjectDir)lib\portable-net45+win+wpa81+wp80\" /s /y</PreBuildEvent>
   </PropertyGroup>
 </Project>

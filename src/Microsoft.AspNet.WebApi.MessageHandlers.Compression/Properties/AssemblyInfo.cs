@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.AspNet.WebApi.MessageHandlers.Compression")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Module for ASP.NET Web API that enables GZip and Deflate support for incoming and outgoing requests")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("EyeCatch")]
 [assembly: AssemblyProduct("Microsoft.AspNet.WebApi.MessageHandlers.Compression")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright © EyeCatch 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
