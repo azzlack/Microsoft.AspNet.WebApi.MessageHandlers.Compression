@@ -14,11 +14,23 @@ GlobalConfiguration.Configuration.MessageHandlers.Insert(0, new CompressionHandl
 This will insert the `CompressionHandler` to the request pipeline as the first on incoming requests, and the last on outgoing requests.
   
 **Client side**  
-You need to apply the following code when creating your `HttpClient`:  
+You need to apply the following code when creating your `HttpClient`, depending on the request type.    
+
+`GET`
 ```csharp
 var client =
     new HttpClient(
         new DecompressionHandler(new HttpClientHandler(), new GZipCompressor(), new DeflateCompressor()));
+
+client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+```
+  
+`POST, PUT, DELETE` (Anything with a request body)
+```csharp
+var client =
+    new HttpClient(
+        new CompressionHandler(new HttpClientHandler(), new GZipCompressor(), new DeflateCompressor()));
 
 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
