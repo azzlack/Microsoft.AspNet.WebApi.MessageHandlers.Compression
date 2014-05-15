@@ -14,9 +14,15 @@ GlobalConfiguration.Configuration.MessageHandlers.Insert(0, new CompressionHandl
 This will insert the `CompressionHandler` to the request pipeline as the first on incoming requests, and the last on outgoing requests.
   
 **Client side**  
+  
+**`JavaScript`**  
+If you are doing your requests with `JavaScript` you probably don't have to do do anything.  
+Just make sure the `gzip` and `deflate` values are included in the `Accept-Encoding` header. (Most browsers do this by default)  
+  
+**`C#`**  
 You need to apply the following code when creating your `HttpClient`, depending on the request type.  
 
-**`GET`**
+**GET requests**
 ```csharp
 var client =
     new HttpClient(
@@ -26,7 +32,7 @@ client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue
 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
 ```
   
-**`POST`, `PUT`, `DELETE`** (Anything with a request body)
+**POST, PUT, DELETE requests (anything with a request body)**
 ```csharp
 var client =
     new HttpClient(
