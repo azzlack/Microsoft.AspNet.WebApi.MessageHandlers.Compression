@@ -26,7 +26,7 @@ client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue
 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
 ```
   
-**`POST, PUT, DELETE`** (Anything with a request body)
+**`POST`, `PUT`, `DELETE`** (Anything with a request body)
 ```csharp
 var client =
     new HttpClient(
