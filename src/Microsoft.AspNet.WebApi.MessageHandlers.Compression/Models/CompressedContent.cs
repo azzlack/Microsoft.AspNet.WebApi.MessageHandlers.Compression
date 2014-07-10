@@ -71,11 +71,11 @@
                 throw new ArgumentNullException("stream");
             }
 
-            using (content)
+            using (this.content)
             {
-                var contentStream = await content.ReadAsStreamAsync();
+                var contentStream = await this.content.ReadAsStreamAsync();
 
-                await compressor.Compress(contentStream, stream);
+                await this.compressor.Compress(contentStream, stream);
             }
         }
 

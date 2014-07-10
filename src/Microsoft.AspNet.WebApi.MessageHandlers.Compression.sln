@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackage", "NuGetPackag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.WebApi.MessageHandlers.Compression", "Microsoft.AspNet.WebApi.MessageHandlers.Compression\Microsoft.AspNet.WebApi.MessageHandlers.Compression.csproj", "{56E19FF7-9AC7-48C5-9AC2-105F55AA16E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{7952E97C-2C7E-424B-A912-ED875576CA92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{56E19FF7-9AC7-48C5-9AC2-105F55AA16E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56E19FF7-9AC7-48C5-9AC2-105F55AA16E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56E19FF7-9AC7-48C5-9AC2-105F55AA16E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7952E97C-2C7E-424B-A912-ED875576CA92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7952E97C-2C7E-424B-A912-ED875576CA92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7952E97C-2C7E-424B-A912-ED875576CA92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7952E97C-2C7E-424B-A912-ED875576CA92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

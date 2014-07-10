@@ -38,11 +38,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompressionHandler.cs" />
+    <Compile Include="HttpContentOperations.cs" />
+    <Compile Include="ServerCompressionHandler.cs" />
+    <Compile Include="ClientCompressionHandler.cs" />
     <Compile Include="Compressors\BaseCompressor.cs" />
     <Compile Include="Compressors\DeflateCompressor.cs" />
     <Compile Include="Compressors\GZipCompressor.cs" />
-    <Compile Include="DecompressionHandler.cs" />
     <Compile Include="Interfaces\ICompressor.cs" />
     <Compile Include="Models\CompressedContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
