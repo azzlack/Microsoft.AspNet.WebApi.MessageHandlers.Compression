@@ -38,7 +38,7 @@ However, this can be overriden by inserting a threshold as the first parameter l
 var serverCompressionHandler = new ServerCompressionHandler(4096, new HttpClientHandler(), new GZipCompressor(), new DeflateCompressor());
 var clientCompressionHandler = new ClientCompressionHandler(4096, new HttpClientHandler(), new GZipCompressor(), new DeflateCompressor());
 ```
-The above code will skip compression for any request/response that is smaller the `4096 bytes` / `4 kB`.
+The above code will skip compression for any request/response that is smaller than `4096 bytes` / `4 kB`.
 
 ## Version history
 #### 1.1 (current)
