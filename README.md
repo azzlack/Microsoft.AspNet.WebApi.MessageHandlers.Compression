@@ -31,7 +31,7 @@ client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue
 Thats it! You should now immediately start experiencing smaller payloads when doing GET, POST, PUT, etc.
 
 ## Advanced use
-### Don't compress requests/responses that are smaller than a specified value
+#### Skip compression of requests/responses that are smaller than a specified value
 By default, both `ServerCompressionHandler` and `ClientCompressionHandler` compress everything.  
 However, this can be overriden by inserting a threshold as the first parameter like this:
 ```csharp
@@ -41,10 +41,10 @@ var clientCompressionHandler = new ClientCompressionHandler(4096, new HttpClient
 The above code will skip compression for any request/response that is smaller the `4096 bytes` / `4 kB`.
 
 ## Version history
-### 1.1 (current)
+#### 1.1 (current)
 * Simplified usage
 * Added support for setting a minimum content size for compressing
 
-### 1.0
+#### 1.0
 * First release, basic compression of server responses and client requests
 * Did not support compressing POSTs and PUTs
