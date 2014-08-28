@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestController.cs" />
     <Compile Include="TestModel.cs" />
+    <Compile Include="TraceMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

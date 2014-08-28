@@ -14,9 +14,9 @@
     public class CompressedContent : HttpContent
     {
         /// <summary>
-        /// The content
+        /// The original content
         /// </summary>
-        private readonly HttpContent content;
+        private readonly HttpContent originalContent;
 
         /// <summary>
         /// The compressor
@@ -40,10 +40,10 @@
                 throw new ArgumentNullException("compressor");
             }
 
-            this.content = content;
+            this.originalContent = content;
             this.compressor = compressor;
 
-            this.AddHeaders();
+            this.CopyHeaders();
         }
 
         /// <summary>
@@ -71,20 +71,22 @@
                 throw new ArgumentNullException("stream");
             }
 
-            using (this.content)
+            using (this.originalContent)
             {
-                var contentStream = await this.content.ReadAsStreamAsync();
+                var contentStream = await this.originalContent.ReadAsStreamAsync();
 
-                await this.compressor.Compress(contentStream, stream);
+                var compressedLength = await this.compressor.Compress(contentStream, stream);
+
+                this.Headers.ContentLength = compressedLength;
             }
         }
 
         /// <summary>
         /// Adds the headers.
         /// </summary>
-        private void AddHeaders()
+        private void CopyHeaders()
         {
-            foreach (var header in content.Headers)
+            foreach (var header in this.originalContent.Headers)
             {
                 this.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }

@@ -1,5 +1,6 @@
 ﻿namespace Tests
 {
+    using System;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
@@ -20,7 +21,6 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-
             var config = new HttpConfiguration();
 
             config.Routes.MapHttpRoute(
@@ -30,7 +30,7 @@
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
-            config.MessageHandlers.Insert(0, new ServerCompressionHandler(0, new GZipCompressor(), new DeflateCompressor()));
+            config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
 
             this.server = new HttpServer(config);
         }
@@ -58,6 +58,8 @@
 
             var content = await response.Content.ReadAsStringAsync();
 
+            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
+
             var result = JsonConvert.DeserializeObject<TestModel>(content);
 
             Assert.AreEqual("Get()", result.Data);
@@ -78,6 +80,8 @@
 
             var content = await response.Content.ReadAsStringAsync();
 
+            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
+
             var result = JsonConvert.DeserializeObject<TestModel>(content);
 
             Assert.AreEqual("Get(" + id + ")", result.Data);
@@ -85,6 +89,7 @@
 
         [TestCase("Content1")]
         [TestCase("Content10")]
+        [TestCase("Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10")]
         public async void Post_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string body)
         {
             var client = new HttpClient(new ClientCompressionHandler(this.server, new GZipCompressor(), new DeflateCompressor()));
@@ -97,6 +102,31 @@
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
             var content = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
+
+            var result = JsonConvert.DeserializeObject<TestModel>(content);
+
+            Assert.AreEqual(body, result.Data);
+        }
+
+        [TestCase("Content1")]
+        [TestCase("Content10")]
+        [TestCase("Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10")]
+        public async void Post_WhenNestedMessageHandlerIsConfigured_ShouldReturnCompressedContent(string body)
+        {
+            var client = new HttpClient(new TraceMessageHandler(new ClientCompressionHandler(this.server, new GZipCompressor(), new DeflateCompressor())));
+
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+
+            var response = await client.PostAsync("http://localhost:55399/api/test", new StringContent(JsonConvert.SerializeObject(new TestModel(body)), Encoding.UTF8, "application/json"));
+
+            Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
             var result = JsonConvert.DeserializeObject<TestModel>(content);
 
@@ -117,6 +147,8 @@
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
             var content = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
             var result = JsonConvert.DeserializeObject<TestModel>(content);
 

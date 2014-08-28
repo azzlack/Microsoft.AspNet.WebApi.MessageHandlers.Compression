@@ -30,7 +30,7 @@
         /// </summary>
         /// <param name="compressors">The compressors.</param>
         public ClientCompressionHandler(params ICompressor[] compressors)
-            : this(null, 0, compressors)
+            : this(new HttpClientHandler(), 860, compressors)
         {
         }
 
@@ -40,7 +40,7 @@
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="compressors">The compressors.</param>
         public ClientCompressionHandler(int contentSizeThreshold, params ICompressor[] compressors)
-            : this(null, contentSizeThreshold, compressors)
+            : this(new HttpClientHandler(), contentSizeThreshold, compressors)
         {
         }
 
@@ -50,7 +50,7 @@
         /// <param name="innerHandler">The inner handler.</param>
         /// <param name="compressors">The compressors.</param>
         public ClientCompressionHandler(HttpMessageHandler innerHandler, params ICompressor[] compressors)
-            : this(innerHandler, 0, compressors)
+            : this(innerHandler, 860, compressors)
         {
         }
 

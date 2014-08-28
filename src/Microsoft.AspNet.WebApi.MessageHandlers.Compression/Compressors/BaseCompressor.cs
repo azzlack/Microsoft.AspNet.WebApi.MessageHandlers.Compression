@@ -1,5 +1,6 @@
 ﻿namespace Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -36,11 +37,25 @@
         /// <param name="source">The source.</param>
         /// <param name="destination">The destination.</param>
         /// <returns>An async void.</returns>
-        public virtual Task Compress(Stream source, Stream destination)
+        public virtual async Task<long> Compress(Stream source, Stream destination)
         {
-            var compressed = this.CreateCompressionStream(destination);
+            using (var mem = new MemoryStream())
+            {
+                using (var gzip = this.CreateCompressionStream(mem))
+                {
+                    await source.CopyToAsync(gzip);
+                }
 
-            return this.Pump(source, compressed).ContinueWith(task => compressed.Dispose());
+                mem.Position = 0;
+
+                var compressed = new byte[mem.Length];
+                await mem.ReadAsync(compressed, 0, compressed.Length);
+
+                var outStream = new MemoryStream(compressed);
+                await outStream.CopyToAsync(destination);
+
+                return mem.Length;
+            }
         }
 
         /// <summary>
@@ -49,11 +64,13 @@
         /// <param name="source">The source.</param>
         /// <param name="destination">The destination.</param>
         /// <returns>An async void.</returns>
-        public virtual Task Decompress(Stream source, Stream destination)
+        public virtual async Task Decompress(Stream source, Stream destination)
         {
             var decompressed = this.CreateDecompressionStream(source);
 
-            return this.Pump(decompressed, destination).ContinueWith(task => decompressed.Dispose());
+            await this.Pump(decompressed, destination);
+
+            decompressed.Dispose();
         }
 
         /// <summary>
@@ -62,9 +79,9 @@
         /// <param name="input">The input.</param>
         /// <param name="output">The output.</param>
         /// <returns>An async void.</returns>
-        protected virtual Task Pump(Stream input, Stream output)
+        protected virtual async Task Pump(Stream input, Stream output)
         {
-            return input.CopyToAsync(output);
+            await input.CopyToAsync(output);
         }
     }
 }

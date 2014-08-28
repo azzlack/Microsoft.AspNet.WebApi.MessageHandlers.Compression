@@ -19,8 +19,8 @@
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="destination">The destination.</param>
-        /// <returns>An async void.</returns>
-        Task Compress(Stream source, Stream destination);
+        /// <returns>The compressed content length.</returns>
+        Task<long> Compress(Stream source, Stream destination);
 
         /// <summary>
         /// Decompresses the specified source stream onto the destination stream.

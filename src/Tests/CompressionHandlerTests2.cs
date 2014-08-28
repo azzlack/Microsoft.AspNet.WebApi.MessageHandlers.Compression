@@ -53,6 +53,10 @@
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
 
             var response = await client.GetAsync("http://localhost:55399/api/test");
+            
+            var content = await response.Content.ReadAsStringAsync();
+
+            Assert.AreEqual(response.Content.Headers.ContentLength, content.Length);
 
             Assert.IsFalse(response.Content.Headers.ContentEncoding.Contains("gzip"));
         }
