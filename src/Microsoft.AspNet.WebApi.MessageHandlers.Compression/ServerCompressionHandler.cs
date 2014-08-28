@@ -31,7 +31,7 @@
         /// </summary>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(params ICompressor[] compressors)
-            : this(null, 0, compressors)
+            : this(null, 860, compressors)
         {
         }
 
@@ -51,7 +51,7 @@
         /// <param name="innerHandler">The inner handler.</param>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(HttpMessageHandler innerHandler, params ICompressor[] compressors)
-            : this(innerHandler, 0, compressors)
+            : this(innerHandler, 860, compressors)
         {
         }
 

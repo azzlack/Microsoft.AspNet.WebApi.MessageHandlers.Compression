@@ -97,7 +97,14 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>XCOPY "$(SolutionDir)Microsoft.AspNet.WebApi.MessageHandlers.Compression\bin\$(ConfigurationName)\Microsoft.AspNet.WebApi.MessageHandlers.Compression.dll" "$(ProjectDir)lib\portable-net45+win+wpa81+wp80\" /s /y
-XCOPY "$(SolutionDir)Microsoft.AspNet.WebApi.MessageHandlers.Compression\bin\$(ConfigurationName)\Microsoft.AspNet.WebApi.MessageHandlers.Compression.pdb" "$(ProjectDir)lib\portable-net45+win+wpa81+wp80\" /s /y</PreBuildEvent>
+    <PreBuildEvent>(robocopy $(SolutionDir)Microsoft.AspNet.WebApi.MessageHandlers.Compression\bin\$(ConfigurationName)\ $(ProjectDir)lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\ Microsoft.AspNet.WebApi.MessageHandlers.Compression.dll /e)
+(robocopy $(SolutionDir)Microsoft.AspNet.WebApi.MessageHandlers.Compression\bin\$(ConfigurationName)\ $(ProjectDir)lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\ Microsoft.AspNet.WebApi.MessageHandlers.Compression.pdb /e)
+(robocopy $(SolutionDir)Microsoft.AspNet.WebApi.MessageHandlers.Compression\ $(ProjectDir)src\ *.cs /xd obj\ /s)
+IF %25ERRORLEVEL%25 LEQ 1 exit 0</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY "$(ProjectDir)*.nupkg" "$(SolutionDir)..\dist\" /y
+DEL $(ProjectDir)*.nupkg
+DEL $(ProjectDir)*.nupkg.bak</PostBuildEvent>
   </PropertyGroup>
 </Project>

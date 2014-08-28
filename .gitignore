@@ -174,3 +174,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 src/NuGetPackage/*.nupkg
 src/NuGetPackage/lib/
+src/NuGetPackage/src/
