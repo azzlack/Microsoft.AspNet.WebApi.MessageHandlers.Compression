@@ -22,7 +22,7 @@ Just make sure the `gzip` and `deflate` values are included in the `Accept-Encod
 #### C\# 
 You need to apply the following code when creating your `HttpClient`.  
 ```csharp
-var client = new HttpClient(new ClientompressionHandler(new HttpClientHandler(), new GZipCompressor(), new DeflateCompressor()));
+var client = new HttpClient(new ClientompressionHandler(new GZipCompressor(), new DeflateCompressor()));
 
 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
@@ -41,10 +41,14 @@ var clientCompressionHandler = new ClientCompressionHandler(4096, new HttpClient
 The above code will skip compression for any request/response that is smaller than `4096 bytes` / `4 kB`.
 
 ## Version history
-#### 1.1 (current)
+#### 1.1.1 (current)
+* Changed default threshold for compression to 860 bytes (what Akamai uses)
+* Now reports proper Content-Length
+
+#### 1.1.0
 * Simplified usage
 * Added support for setting a minimum content size for compressing
 
-#### 1.0
+#### 1.0.3
 * First release, basic compression of server responses and client requests
 * Did not support compressing POSTs and PUTs
