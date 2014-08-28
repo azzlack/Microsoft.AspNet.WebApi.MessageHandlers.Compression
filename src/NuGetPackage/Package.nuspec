@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Microsoft.AspNet.WebApi.MessageHandlers.Compression</id>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <title>Microsoft ASP.NET Web API Compression Support</title>
     <authors>Ove Andersen</authors>
     <owners>EyeCatch</owners>
