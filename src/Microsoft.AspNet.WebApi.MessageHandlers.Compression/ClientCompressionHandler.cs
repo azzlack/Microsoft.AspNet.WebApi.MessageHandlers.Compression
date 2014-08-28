@@ -30,9 +30,8 @@
         /// </summary>
         /// <param name="compressors">The compressors.</param>
         public ClientCompressionHandler(params ICompressor[] compressors)
+            : this(null, 0, compressors)
         {
-            this.Compressors = compressors;
-            this.httpContentOperations = new HttpContentOperations();
         }
 
         /// <summary>
@@ -41,9 +40,8 @@
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="compressors">The compressors.</param>
         public ClientCompressionHandler(int contentSizeThreshold, params ICompressor[] compressors)
-            : this(compressors)
+            : this(null, contentSizeThreshold, compressors)
         {
-            this.contentSizeThreshold = contentSizeThreshold;
         }
 
         /// <summary>
@@ -52,9 +50,8 @@
         /// <param name="innerHandler">The inner handler.</param>
         /// <param name="compressors">The compressors.</param>
         public ClientCompressionHandler(HttpMessageHandler innerHandler, params ICompressor[] compressors)
-            : this(compressors)
+            : this(innerHandler, 0, compressors)
         {
-            this.InnerHandler = innerHandler;
         }
 
         /// <summary>
@@ -64,9 +61,16 @@
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="compressors">The compressors.</param>
         public ClientCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold, params ICompressor[] compressors)
-            : this(contentSizeThreshold, compressors)
         {
-            this.InnerHandler = innerHandler;
+            if (innerHandler != null)
+            {
+                this.InnerHandler = innerHandler;
+            }
+
+            this.Compressors = compressors;
+            this.contentSizeThreshold = contentSizeThreshold;
+
+            this.httpContentOperations = new HttpContentOperations();
         }
 
         /// <summary>
