@@ -1,4 +1,4 @@
-﻿namespace Tests
+﻿namespace Tests.Integration
 {
     using System;
     using System.Net.Http;
@@ -30,7 +30,7 @@
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
-            config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+            config.MessageHandlers.Insert(0, new ServerCompressionHandler(0, new GZipCompressor(), new DeflateCompressor()));
 
             this.server = new HttpServer(config);
         }
@@ -47,7 +47,7 @@
         [Test]
         public async void Get_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
         {
-            var client = new HttpClient(new ClientCompressionHandler(this.server, new GZipCompressor(), new DeflateCompressor()));
+            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor()));
 
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
@@ -69,7 +69,7 @@
         [TestCase("10")]
         public async void GetSpecific_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string id)
         {
-            var client = new HttpClient(new ClientCompressionHandler(this.server, new GZipCompressor(), new DeflateCompressor()));
+            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor()));
 
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
@@ -92,7 +92,7 @@
         [TestCase("Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10")]
         public async void Post_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string body)
         {
-            var client = new HttpClient(new ClientCompressionHandler(this.server, new GZipCompressor(), new DeflateCompressor()));
+            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor()));
 
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
@@ -115,7 +115,7 @@
         [TestCase("Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10")]
         public async void Post_WhenNestedMessageHandlerIsConfigured_ShouldReturnCompressedContent(string body)
         {
-            var client = new HttpClient(new TraceMessageHandler(new ClientCompressionHandler(this.server, new GZipCompressor(), new DeflateCompressor())));
+            var client = new HttpClient(new TraceMessageHandler(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor())));
 
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
@@ -137,7 +137,7 @@
         [TestCase("2", "Content10")]
         public async void Put_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string id, string body)
         {
-            var client = new HttpClient(new ClientCompressionHandler(this.server, new GZipCompressor(), new DeflateCompressor()));
+            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor()));
 
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
@@ -159,7 +159,7 @@
         [TestCase("2")]
         public async void Delete_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string id)
         {
-            var client = new HttpClient(new ClientCompressionHandler(this.server, new GZipCompressor(), new DeflateCompressor()));
+            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor()));
 
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));

@@ -1,14 +1,11 @@
-﻿namespace Tests
+﻿namespace Tests.Integration
 {
     using System.Net.Http;
     using System.Net.Http.Headers;
-    using System.Text;
     using System.Web.Http;
 
     using Microsoft.AspNet.WebApi.MessageHandlers.Compression;
     using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors;
-
-    using Newtonsoft.Json;
 
     using NUnit.Framework;
 

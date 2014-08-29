@@ -31,7 +31,7 @@ Supported Platforms:
     <copyright>Copyright EyeCatch 2014</copyright>
     <dependencies>
       <group>
-        <dependency id="Microsoft.Net.Http" version="2.2.22" />
+        <dependency id="Microsoft.Net.Http" version="2.2.28" />
         <dependency id="Microsoft.Bcl.Compression" version="3.9.83" />
       </group>
     </dependencies>
