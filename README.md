@@ -41,14 +41,19 @@ var clientCompressionHandler = new ClientCompressionHandler(4096, new GZipCompre
 The above code will skip compression for any request/response that is smaller than `4096 bytes` / `4 kB`.
 
 ## Version history
-#### 1.1.2 (current)
+#### [1.2.0](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.2.0) (current)
+* Fixed 504 timeout error when returning `ByteArrayContent` from an `ApiController`
+* Fixed bug wuth content stream sometimes being disposed before returning
+* Added better test coverage
+
+#### [1.1.2](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.1.2)
 * Changed default threshold for compression to 860 bytes (what Akamai uses)
 * Now reports proper Content-Length
 
-#### 1.1.0
+#### [1.1.0](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.1.0)
 * Simplified usage
 * Added support for setting a minimum content size for compressing
 
-#### 1.0.3
+#### [1.0.3](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.0.3)
 * First release, basic compression of server responses and client requests
 * Did not support compressing POSTs and PUTs
