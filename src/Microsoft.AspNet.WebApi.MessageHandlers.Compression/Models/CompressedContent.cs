@@ -71,13 +71,13 @@
                 throw new ArgumentNullException("stream");
             }
 
-            using (this.originalContent)
+            // Read and compress stream
+            using (var ms = new MemoryStream(await this.originalContent.ReadAsByteArrayAsync()))
             {
-                var contentStream = await this.originalContent.ReadAsStreamAsync();
+                var compressedLength = await this.compressor.Compress(ms, stream).ConfigureAwait(false);
 
-                var compressedLength = await this.compressor.Compress(contentStream, stream);
-
-                this.Headers.ContentLength = compressedLength;
+                // Content-Length: {size}
+                this.Headers.ContentLength = compressedLength;   
             }
         }
 
@@ -86,12 +86,23 @@
         /// </summary>
         private void CopyHeaders()
         {
-            foreach (var header in this.originalContent.Headers)
-            {
-                this.Headers.TryAddWithoutValidation(header.Key, header.Value);
-            }
-
+            // Content-Encoding: {content-encodings}
             this.Headers.ContentEncoding.Add(compressor.EncodingType);
+
+            // Content-Type: {media-types}
+            this.Headers.ContentType = this.originalContent.Headers.ContentType;
+        }
+
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="T:System.Net.Http.HttpContent" /> and optionally disposes of the managed resources.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to releases only unmanaged resources.</param>
+        protected override void Dispose(bool disposing)
+        {
+            // Dispose original stream
+            this.originalContent.Dispose();
+
+            base.Dispose(disposing);
         }
     }
 }

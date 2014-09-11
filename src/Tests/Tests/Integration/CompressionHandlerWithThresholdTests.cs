@@ -1,4 +1,4 @@
-﻿namespace Tests.Integration
+﻿namespace Tests.Tests.Integration
 {
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -10,15 +10,16 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class CompressionHandlerTests2
+    public class CompressionHandlerWithThresholdTests
     {
         private HttpServer server;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-
             var config = new HttpConfiguration();
+
+            config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

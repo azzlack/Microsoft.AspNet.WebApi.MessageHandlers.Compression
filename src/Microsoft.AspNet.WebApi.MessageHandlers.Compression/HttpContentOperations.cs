@@ -19,22 +19,23 @@
         /// <returns>The decompressed content.</returns>
         public async Task<HttpContent> DecompressContent(HttpContent compressedContent, ICompressor compressor)
         {
-            using (compressedContent)
+            var decompressedContentStream = new MemoryStream();
+
+            // Decompress buffered content
+            using (var ms = new MemoryStream(await compressedContent.ReadAsByteArrayAsync())) 
             {
-                var decompressedContentStream = new MemoryStream();
-
-                await compressor.Decompress(await compressedContent.ReadAsStreamAsync(), decompressedContentStream);
-
-                // Set position back to 0 so it can be read again
-                decompressedContentStream.Position = 0;
-
-                var decompressedContent = new StreamContent(decompressedContentStream);
-
-                // Copy content headers so we know what got sent back
-                this.CopyHeaders(compressedContent, decompressedContent);
-
-                return decompressedContent;
+                await compressor.Decompress(ms, decompressedContentStream).ConfigureAwait(false);
             }
+
+            // Set position back to 0 so it can be read again
+            decompressedContentStream.Position = 0;
+
+            var decompressedContent = new StreamContent(decompressedContentStream);
+
+            // Copy content headers so we know what got sent back
+            this.CopyHeaders(compressedContent, decompressedContent);
+
+            return decompressedContent;
         }
 
         /// <summary>

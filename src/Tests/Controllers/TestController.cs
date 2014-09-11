@@ -1,8 +1,10 @@
-﻿namespace Tests
+﻿namespace Tests.Controllers
 {
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
+
+    using global::Tests.Models;
 
     public class TestController : ApiController
     {
@@ -10,7 +12,7 @@
         {
             return this.Request.CreateResponse(new TestModel("Get()"));
         }
-        
+
         public async Task<HttpResponseMessage> Get(string id)
         {
             return this.Request.CreateResponse(new TestModel("Get(" + id + ")"));

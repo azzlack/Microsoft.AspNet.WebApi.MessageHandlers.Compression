@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Net.Http;
@@ -94,10 +95,24 @@
                 await this.DecompressRequest(request);
             }
 
-            var response = await base.SendAsync(request, cancellationToken);
+            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+            var process = true;
+
+            try
+            {
+                // Buffer content for further processing
+                await response.Content.LoadIntoBufferAsync();
+            }
+            catch (Exception ex)
+            {
+                process = false;
+
+                Debug.WriteLine(ex.Message);
+            }
 
             // Compress uncompressed responses from the server
-            if (response.Content != null && request.Headers.AcceptEncoding.Any())
+            if (process && response.Content != null && request.Headers.AcceptEncoding.Any())
             {
                 await this.CompressResponse(request, response);
             }
@@ -126,14 +141,21 @@
 
             if (compressor != null)
             {
-                // Only compress response if size is larger than treshold (if set)
-                if (this.contentSizeThreshold == 0)
+                try
                 {
-                    response.Content = new CompressedContent(response.Content, compressor);   
+                    // Only compress response if size is larger than treshold (if set)
+                    if (this.contentSizeThreshold == 0)
+                    {
+                        response.Content = new CompressedContent(response.Content, compressor);   
+                    }
+                    else if (this.contentSizeThreshold > 0 && response.Content.Headers.ContentLength >= this.contentSizeThreshold)
+                    {
+                        response.Content = new CompressedContent(response.Content, compressor);
+                    }
                 }
-                else if (this.contentSizeThreshold > 0 && response.Content.Headers.ContentLength >= this.contentSizeThreshold)
+                catch (Exception ex)
                 {
-                    response.Content = new CompressedContent(response.Content, compressor);
+                    throw new Exception(string.Format("Unable to compress response using compressor '{0}'", compressor.GetType()), ex);
                 }
             }
         }
@@ -151,7 +173,14 @@
 
             if (compressor != null)
             {
-                request.Content = await this.httpContentOperations.DecompressContent(request.Content, compressor);
+                try
+                {
+                    request.Content = await this.httpContentOperations.DecompressContent(request.Content, compressor).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(string.Format("Unable to decompress request using compressor '{0}'", compressor.GetType()), ex);
+                }
             }
         }
     }

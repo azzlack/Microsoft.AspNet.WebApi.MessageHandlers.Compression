@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Net.Http;
     using System.Threading;
@@ -24,7 +25,6 @@
         /// The HTTP content operations
         /// </summary>
         private readonly HttpContentOperations httpContentOperations;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientCompressionHandler" /> class.
         /// </summary>
@@ -92,11 +92,25 @@
             {
                 await this.CompressRequest(request);
             }
-            
-            var response = await base.SendAsync(request, cancellationToken);
+
+            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+            var process = true;
+
+            try
+            {
+                // Buffer content for further processing
+                await response.Content.LoadIntoBufferAsync();
+            }
+            catch (Exception ex)
+            {
+                process = false;
+
+                Debug.WriteLine(ex.Message);
+            }
 
             // Decompress compressed responses to the client from the server
-            if (response.Content != null && response.Content.Headers.ContentEncoding.Any())
+            if (process && response.Content != null && response.Content.Headers.ContentEncoding.Any())
             {
                 await this.DecompressResponse(response);
             }
@@ -124,14 +138,21 @@
 
             if (compressor != null)
             {
-                // Only compress response if size is larger than threshold (if set)
-                if (this.contentSizeThreshold == 0)
+                try
                 {
-                    request.Content = new CompressedContent(request.Content, compressor);   
+                    // Only compress request if size is larger than threshold (if set)
+                    if (this.contentSizeThreshold == 0)
+                    {
+                        request.Content = new CompressedContent(request.Content, compressor);
+                    }
+                    else if (this.contentSizeThreshold > 0 && request.Content.Headers.ContentLength >= this.contentSizeThreshold)
+                    {
+                        request.Content = new CompressedContent(request.Content, compressor);
+                    }
                 }
-                else if (this.contentSizeThreshold > 0 && request.Content.Headers.ContentLength >= this.contentSizeThreshold)
+                catch (Exception ex)
                 {
-                    request.Content = new CompressedContent(request.Content, compressor);
+                    throw new Exception(string.Format("Unable to compress request using compressor '{0}'", compressor.GetType()), ex);
                 }
             }
         }
@@ -151,7 +172,14 @@
 
                 if (compressor != null)
                 {
-                    response.Content = await this.httpContentOperations.DecompressContent(response.Content, compressor);
+                    try
+                    {
+                        response.Content = await this.httpContentOperations.DecompressContent(response.Content, compressor).ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(string.Format("Unable to decompress response using compressor '{0}'", compressor.GetType()), ex);
+                    }
                 }
             }
         }

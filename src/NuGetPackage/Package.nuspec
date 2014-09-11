@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Microsoft.AspNet.WebApi.MessageHandlers.Compression</id>
-    <version>1.1.2</version>
+    <version>1.2.0</version>
     <title>Microsoft ASP.NET Web API Compression Support</title>
     <authors>Ove Andersen</authors>
     <owners>EyeCatch</owners>
@@ -18,7 +18,8 @@ Supported Platforms:
 - Portable Class Libraries
     </description>
     <releaseNotes>
-      Simplified usage, and added support for setting a minimum content size for compressing.
+      Fixed bug wuth content stream sometimes being disposed before returning.
+Fixed bug with 504 error when returning ByteArrayContent.
     </releaseNotes>
     <summary>
       Module for ASP.NET Web API that enables GZip and Deflate support for incoming and outgoing requests. Please note that this is not an official Microsoft package.

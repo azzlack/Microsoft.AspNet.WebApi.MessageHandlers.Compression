@@ -1,4 +1,4 @@
-﻿namespace Tests
+﻿namespace Tests.Handlers
 {
     using System;
     using System.Diagnostics;
@@ -6,8 +6,18 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using global::Tests.Extensions;
+
     public class TraceMessageHandler : DelegatingHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TraceMessageHandler"/> class.
+        /// </summary>
+        public TraceMessageHandler()
+            : this(new HttpClientHandler())
+        {   
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TraceMessageHandler" /> class.
         /// </summary>
@@ -30,45 +40,49 @@
             var requestMessage = string.Format("Request: {0} {1}", request.Method, request.RequestUri);
             Trace.TraceInformation(requestMessage);
 
-            var task = await base.SendAsync(request, cancellationToken);
-
+            // Try to read out the request content
             if (request.Content != null)
             {
+                await request.Content.LoadIntoBufferAsync();
+
                 Trace.TraceInformation("Request Body: {0}", await request.Content.ReadAsStringAsync());
             }
 
-            var response = string.Format(
-                "Response: {0} {1} - {{ Time: {2}, Size: {3} }}",
-                (int)task.StatusCode,
-                task.ReasonPhrase,
-                DateTime.Now.Subtract(startTime),
-                task.Content != null ? (await task.Content.ReadAsByteArrayAsync()).Length : 0);
+            var response = await base.SendAsync(request, cancellationToken);
 
-            if (!task.IsSuccessStatusCode)
+            var responseMessage = string.Format(
+                "Response: {0} {1} - {{ Time: {2}, Size: {3} }}",
+                (int)response.StatusCode,
+                response.ReasonPhrase,
+                DateTime.Now.Subtract(startTime).AsHumanReadableString(),
+                response.Content != null ? response.Content.SizeAsHumanReadableString() : "0");
+
+            // Try to read out the response content
+            if (response.Content != null)
             {
-                Trace.TraceError(requestMessage);
-                Trace.TraceError(response);
+                await response.Content.LoadIntoBufferAsync();
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Trace.TraceError(responseMessage);
+
+                if (response.Content != null)
+                {
+                    Trace.TraceError(string.Format("Response Body: {0}", await response.Content.ReadAsStringAsync()));
+                }
             }
             else
             {
-                Trace.TraceInformation(response);
-            }
+                Trace.TraceInformation(responseMessage);
 
-            if (task.Content != null)
-            {
-                var responseBody = string.Format("Response Body: {0}", await task.Content.ReadAsStringAsync());
-
-                if (!task.IsSuccessStatusCode)
+                if (response.Content != null)
                 {
-                    Trace.TraceError(responseBody);
-                }
-                else
-                {
-                    Trace.TraceInformation(responseBody);
+                    Trace.TraceInformation("Response Body: {0}", await response.Content.ReadAsStringAsync());
                 }
             }
 
-            return task;
+            return response;
         }
     }
 }
