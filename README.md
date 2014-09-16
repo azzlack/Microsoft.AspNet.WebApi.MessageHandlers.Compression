@@ -3,7 +3,7 @@ Microsoft.AspNet.WebApi.MessageHandlers.Compression
 
 Drop-in module for ASP.Net WebAPI that enables `GZip` and `Deflate` support
 
-![NuGet Package Downloads](http://img.shields.io/nuget/dt/Microsoft.AspNet.WebApi.MessageHandlers.Compression.svg?style=flat-square) ![NuGet Package Version](http://img.shields.io/nuget/v/Microsoft.AspNet.WebApi.MessageHandlers.Compression.svg?style=flat-square)
+![NuGet Package Version](http://img.shields.io/nuget/v/Microsoft.AspNet.WebApi.MessageHandlers.Compression.svg?style=flat-square)&nbsp;&nbsp;![NuGet Package Downloads](http://img.shields.io/nuget/dt/Microsoft.AspNet.WebApi.MessageHandlers.Compression.svg?style=flat-square)
 
 ## How to use
 ### Server side
