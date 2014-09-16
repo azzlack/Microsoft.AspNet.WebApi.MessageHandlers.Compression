@@ -86,11 +86,44 @@
         /// </summary>
         private void CopyHeaders()
         {
+            // Allow: {methods}
+            foreach (var allow in this.originalContent.Headers.Allow)
+            {
+                this.Headers.Allow.Add(allow);
+            }
+
+            // Content-Disposition: {disposition-type}; {disposition-param}
+            this.Headers.ContentDisposition = this.originalContent.Headers.ContentDisposition;
+
             // Content-Encoding: {content-encodings}
             this.Headers.ContentEncoding.Add(compressor.EncodingType);
 
+            // Content-Language: {languages}
+            foreach (var language in this.originalContent.Headers.ContentLanguage)
+            {
+                this.Headers.ContentLanguage.Add(language);
+            }
+
             // Content-Type: {media-types}
             this.Headers.ContentType = this.originalContent.Headers.ContentType;
+
+            // Content-Location: {uri}
+            this.Headers.ContentLocation = this.originalContent.Headers.ContentLocation;
+
+            // Content-MD5: {md5-digest}
+            this.Headers.ContentMD5 = this.originalContent.Headers.ContentMD5;
+
+            // Content-Range: {range}
+            this.Headers.ContentRange = this.originalContent.Headers.ContentRange;
+
+            // Content-Type: {media-types}
+            this.Headers.ContentType = this.originalContent.Headers.ContentType;
+
+            // Expires: {http-date}
+            this.Headers.Expires = this.originalContent.Headers.Expires;
+
+            // LastModified: {http-date}
+            this.Headers.LastModified = this.originalContent.Headers.LastModified;
         }
 
         /// <summary>
