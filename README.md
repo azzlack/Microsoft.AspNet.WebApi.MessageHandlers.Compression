@@ -23,7 +23,7 @@ Just make sure the `gzip` and `deflate` values are included in the `Accept-Encod
 #### C\# 
 You need to apply the following code when creating your `HttpClient`.  
 ```csharp
-var client = new HttpClient(new ClientompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+var client = new HttpClient(new ClientCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
 
 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
