@@ -1,3 +1,5 @@
+﻿// Need to cite sources such as Ben Foster and Kiran Challa
+﻿
 ﻿namespace Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors
 {
     using System;
