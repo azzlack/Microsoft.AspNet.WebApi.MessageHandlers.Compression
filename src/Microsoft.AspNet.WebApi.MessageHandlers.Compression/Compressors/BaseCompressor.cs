@@ -1,6 +1,4 @@
-﻿// Need to cite sources such as Ben Foster and Kiran Challa
-﻿
-﻿namespace Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors
+namespace Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors
 {
     using System;
     using System.IO;
@@ -11,6 +9,11 @@
     /// <summary>
     /// Base compressor for compressing streams.
     /// </summary>
+    /// <remarks>
+    /// Based on the work by: 
+    ///     Ben Foster (http://benfoster.io/blog/aspnet-web-api-compression)
+    ///     Kiran Challa (http://blogs.msdn.com/b/kiranchalla/archive/2012/09/04/handling-compression-accept-encoding-sample.aspx)
+    /// </remarks>
     public abstract class BaseCompressor : ICompressor
     {
         /// <summary>
