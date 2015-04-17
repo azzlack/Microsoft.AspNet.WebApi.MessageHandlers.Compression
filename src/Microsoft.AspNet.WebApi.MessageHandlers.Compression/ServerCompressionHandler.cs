@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.IO;
     using System.Linq;
     using System.Net.Http;
     using System.Threading;
@@ -102,10 +101,14 @@
             try
             {
                 if (response.Content != null)
+                {
                     // Buffer content for further processing
                     await response.Content.LoadIntoBufferAsync();
+                }
                 else
+                {
                     process = false;
+                }
             }
             catch (Exception ex)
             {
