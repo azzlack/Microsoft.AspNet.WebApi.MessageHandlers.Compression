@@ -101,8 +101,11 @@
 
             try
             {
-                // Buffer content for further processing
-                await response.Content.LoadIntoBufferAsync();
+                if (response.Content != null)
+                    // Buffer content for further processing
+                    await response.Content.LoadIntoBufferAsync();
+                else
+                    process = false;
             }
             catch (Exception ex)
             {
