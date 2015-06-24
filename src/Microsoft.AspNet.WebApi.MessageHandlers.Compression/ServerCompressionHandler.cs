@@ -92,15 +92,15 @@
 
             this.enableCompression = enableCompression ?? (x =>
             {
-                if (x.Properties["DisableCompression"] == null)
+                if (x.Properties["compression:Enable"] == null)
                 {
                     return true;
                 }
 
-                bool disable;
-                bool.TryParse(x.Properties["DisableCompression"].ToString(), out disable);
+                bool enable;
+                bool.TryParse(x.Properties["compression:Enable"].ToString(), out enable);
 
-                return !disable;
+                return enable;
             });
         }
 

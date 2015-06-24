@@ -38,7 +38,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\DisableCompressionAttribute.cs" />
+    <Compile Include="Attributes\CompressionAttribute.cs" />
     <Compile Include="HttpContentOperations.cs" />
     <Compile Include="ServerCompressionHandler.cs" />
     <Compile Include="ClientCompressionHandler.cs" />

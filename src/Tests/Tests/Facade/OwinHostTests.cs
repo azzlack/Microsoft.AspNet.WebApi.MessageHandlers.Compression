@@ -58,15 +58,15 @@
         }
 
         [Test]
-        public async void GetPdf_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
-        {
-            await this.testFixture.GetPdf_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent();
-        }
-
-        [Test]
         public async void GetImage_WhenAttributeIsConfigured_ShouldReturnUncompressedContent()
         {
             await this.testFixture.GetImage_WhenAttributeIsConfigured_ShouldReturnUncompressedContent();
+        }
+
+        [Test]
+        public async void GetPdf_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
+        {
+            await this.testFixture.GetPdf_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent();
         }
 
         [TestCase("1")]

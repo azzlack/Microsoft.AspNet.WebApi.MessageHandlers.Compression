@@ -41,7 +41,7 @@
             }
         }
 
-        [DisableCompression]
+        [Compression(Enabled = false)]
         [Route("api/file/uncompressedimage")]
         public async Task<HttpResponseMessage> GetUncompressedImage()
         {
