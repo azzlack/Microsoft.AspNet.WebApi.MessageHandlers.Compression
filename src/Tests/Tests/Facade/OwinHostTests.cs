@@ -116,7 +116,7 @@
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
 
             // Add compression message handler
-            config.MessageHandlers.Insert(0, new ServerCompressionHandler(0, new GZipCompressor(), new DeflateCompressor()));
+            config.MessageHandlers.Insert(0, new ServerCompressionHandler(4096, new GZipCompressor(), new DeflateCompressor()));
 
             appBuilder.UseWebApi(config);
         }

@@ -145,6 +145,12 @@
 
             if (compressor != null)
             {
+                // Try to set content-length by loading the content into memory if the content-length is not already set
+                if (request.Content.Headers.ContentLength == null)
+                {
+                    await request.Content.LoadIntoBufferAsync();
+                }
+
                 try
                 {
                     // Only compress request if size is larger than threshold (if set)
@@ -173,7 +179,7 @@
         {
             var encoding = response.Content.Headers.ContentEncoding.FirstOrDefault();
 
-            if (encoding != null) 
+            if (encoding != null)
             {
                 var compressor = this.Compressors.FirstOrDefault(c => c.EncodingType.Equals(encoding, StringComparison.OrdinalIgnoreCase));
 

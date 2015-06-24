@@ -55,6 +55,7 @@
 
             Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
+            Assert.AreEqual(749, response.Content.Headers.ContentLength);
             Assert.AreEqual(4596, content.Length);
         }
 
