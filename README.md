@@ -44,7 +44,11 @@ var clientCompressionHandler = new ClientCompressionHandler(4096, new GZipCompre
 The above code will skip compression for any request/response that is smaller than `4096 bytes` / `4 kB`.
 
 ## Version history
-#### [1.2.2](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.2.2)  (current)
+#### [1.3.0](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.3.0)  (current)
+* Added attribute for disable compression for certain routes
+* Fixed clearing of non-standard properties when compressing and decompressing
+
+#### [1.2.2](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.2.2)
 * Stop trying to compress requests/responses with no content
 
 #### [1.2.1](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.2.1)
