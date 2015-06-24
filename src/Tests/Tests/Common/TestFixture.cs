@@ -41,6 +41,19 @@
             Assert.AreEqual("Get()", result.Data);
         }
 
+        public async Task Get_WhenGivenCustomHeader_ShouldReturnCompressedContentWithCustomHeader()
+        {
+            var response = await this.client.GetAsync("http://localhost:55399/api/test/customheader");
+
+            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+
+            Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
+
+            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
+
+            Assert.IsTrue(response.Headers.Contains("DataServiceVersion"), "The response did not contain the DataServiceVersion header");
+        }
+
         public async Task GetImage_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
         {
 

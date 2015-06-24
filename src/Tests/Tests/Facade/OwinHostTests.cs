@@ -52,6 +52,12 @@
         }
 
         [Test]
+        public async void Get_WhenGivenCustomHeader_ShouldReturnCompressedContentWithCustomHeader()
+        {
+            await this.testFixture.Get_WhenGivenCustomHeader_ShouldReturnCompressedContentWithCustomHeader();
+        }
+
+        [Test]
         public async void GetImage_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
         {
             await this.testFixture.GetImage_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent();

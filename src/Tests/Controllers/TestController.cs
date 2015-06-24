@@ -6,13 +6,20 @@
 
     using global::Tests.Models;
 
-    using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Attributes;
-
     public class TestController : ApiController
     {
         public async Task<HttpResponseMessage> Get()
         {
             return this.Request.CreateResponse(new TestModel("Get()"));
+        }
+
+        [Route("api/test/customheader")]
+        public async Task<HttpResponseMessage> GetCustomHeader()
+        {
+            var response = this.Request.CreateResponse(new TestModel("Get()"));
+            response.Headers.Add("DataServiceVersion", "3.0");
+
+            return response;
         }
 
         public async Task<HttpResponseMessage> Get(string id)
