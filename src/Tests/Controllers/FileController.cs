@@ -13,6 +13,8 @@
     using iTextSharp.text;
     using iTextSharp.text.pdf;
 
+    using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Attributes;
+
     public class FileController : ApiController
     {
         [Route("api/file/image")]
@@ -31,11 +33,36 @@
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK)
                                  {
-                                    Content = new ByteArrayContent(ms.ToArray())
+                                     Content = new ByteArrayContent(ms.ToArray())
                                  };
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
 
-                return result;   
+                return result;
+            }
+        }
+
+        [DisableCompression]
+        [Route("api/file/uncompressedimage")]
+        public async Task<HttpResponseMessage> GetUncompressedImage()
+        {
+            using (var ms = new MemoryStream())
+            {
+                var baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory);
+                var filePath = baseDir.FullName + "/Content/Images/app-icon-1024.png";
+
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    fs.Position = 0;
+                    await fs.CopyToAsync(ms);
+                }
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new ByteArrayContent(ms.ToArray())
+                };
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+
+                return result;
             }
         }
 
@@ -52,14 +79,14 @@
 
             // Write PDF document
             document.Open();
-            
+
             var baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory);
 
             var logoHeader = Image.GetInstance(baseDir.FullName + "/Content/Images/app-icon-1024.png");
             logoHeader.ScalePercent(10);
             logoHeader.SetAbsolutePosition(document.PageSize.Width - logoHeader.ScaledWidth - document.RightMargin, document.PageSize.Height - document.TopMargin - logoHeader.ScaledHeight);
             document.Add(logoHeader);
-            
+
             var headline = new Paragraph("Unicorns!");
 
             document.Add(headline);

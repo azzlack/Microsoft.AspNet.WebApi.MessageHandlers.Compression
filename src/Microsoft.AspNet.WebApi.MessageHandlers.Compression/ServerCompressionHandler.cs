@@ -7,6 +7,7 @@
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Web.Http;
 
     using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Interfaces;
     using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Models;
@@ -87,8 +88,20 @@
 
             this.Compressors = compressors;
             this.contentSizeThreshold = contentSizeThreshold;
-            this.enableCompression = enableCompression ?? (x => true);
             this.httpContentOperations = new HttpContentOperations();
+
+            this.enableCompression = enableCompression ?? (x =>
+            {
+                if (x.Properties["DisableCompression"] == null)
+                {
+                    return true;
+                }
+
+                bool disable;
+                bool.TryParse(x.Properties["DisableCompression"].ToString(), out disable);
+
+                return !disable;
+            });
         }
 
         /// <summary>
@@ -113,28 +126,25 @@
 
             var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-            var process = true;
+            var process = this.enableCompression(request);
 
-            if (enableCompression(request))
+            try
             {
-                try
+                if (response.Content != null)
                 {
-                    if (response.Content != null)
-                    {
-                        // Buffer content for further processing
-                        await response.Content.LoadIntoBufferAsync();
-                    }
-                    else
-                    {
-                        process = false;
-                    }
+                    // Buffer content for further processing
+                    await response.Content.LoadIntoBufferAsync();
                 }
-                catch (Exception ex)
+                else
                 {
                     process = false;
-
-                    Debug.WriteLine(ex.Message);
                 }
+            }
+            catch (Exception ex)
+            {
+                process = false;
+
+                Debug.WriteLine(ex.Message);
             }
 
             // Compress uncompressed responses from the server
@@ -172,7 +182,7 @@
                     // Only compress response if size is larger than treshold (if set)
                     if (this.contentSizeThreshold == 0)
                     {
-                        response.Content = new CompressedContent(response.Content, compressor);   
+                        response.Content = new CompressedContent(response.Content, compressor);
                     }
                     else if (this.contentSizeThreshold > 0 && response.Content.Headers.ContentLength >= this.contentSizeThreshold)
                     {

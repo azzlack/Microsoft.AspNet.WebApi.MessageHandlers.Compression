@@ -63,6 +63,12 @@
             await this.testFixture.GetPdf_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent();
         }
 
+        [Test]
+        public async void GetImage_WhenAttributeIsConfigured_ShouldReturnUncompressedContent()
+        {
+            await this.testFixture.GetImage_WhenAttributeIsConfigured_ShouldReturnUncompressedContent();
+        }
+
         [TestCase("1")]
         [TestCase("10")]
         public async void GetSpecific_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string id)
@@ -108,7 +114,7 @@
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
-            
+
             // Add compression message handler
             config.MessageHandlers.Insert(0, new ServerCompressionHandler(0, new GZipCompressor(), new DeflateCompressor()));
 

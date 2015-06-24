@@ -45,11 +45,11 @@
         [TestFixtureTearDown]
         public void Teardown()
         {
-            if (!this.iisProcess.HasExited) 
+            if (!this.iisProcess.HasExited)
             {
                 this.iisProcess.CloseMainWindow();
 
-                if (this.iisProcess != null) 
+                if (this.iisProcess != null)
                 {
                     this.iisProcess.Dispose();
                 }
@@ -66,6 +66,12 @@
         public async void GetImage_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
         {
             await this.testFixture.GetImage_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent();
+        }
+
+        [Test]
+        public async void GetImage_WhenAttributeIsConfigured_ShouldReturnUncompressedContent()
+        {
+            await this.testFixture.GetImage_WhenAttributeIsConfigured_ShouldReturnUncompressedContent();
         }
 
         [Test]

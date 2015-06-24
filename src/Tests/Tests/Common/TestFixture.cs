@@ -58,6 +58,23 @@
             Assert.AreEqual(4596, content.Length);
         }
 
+        public async Task GetImage_WhenAttributeIsConfigured_ShouldReturnUncompressedContent()
+        {
+
+            var response = await this.client.GetAsync("http://localhost:55399/api/file/uncompressedimage");
+
+            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+
+            Assert.IsTrue(response.Content.Headers.ContentType.MediaType == "image/png");
+            Assert.IsFalse(response.Content.Headers.ContentEncoding.Contains("gzip"));
+
+            var content = await response.Content.ReadAsByteArrayAsync();
+
+            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
+
+            Assert.AreEqual(4596, content.Length);
+        }
+
         public async Task GetPdf_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
         {
             var response = await this.client.GetAsync("http://localhost:55399/api/file/pdf");

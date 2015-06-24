@@ -6,6 +6,8 @@
 
     using global::Tests.Models;
 
+    using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Attributes;
+
     public class TestController : ApiController
     {
         public async Task<HttpResponseMessage> Get()
@@ -17,7 +19,7 @@
         {
             return this.Request.CreateResponse(new TestModel("Get(" + id + ")"));
         }
-        
+
         [HttpPost]
         public async Task<HttpResponseMessage> Post(TestModel m)
         {
