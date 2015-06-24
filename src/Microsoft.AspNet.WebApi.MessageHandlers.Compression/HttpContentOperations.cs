@@ -1,5 +1,7 @@
 ﻿namespace Microsoft.AspNet.WebApi.MessageHandlers.Compression
 {
+    using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -22,7 +24,7 @@
             var decompressedContentStream = new MemoryStream();
 
             // Decompress buffered content
-            using (var ms = new MemoryStream(await compressedContent.ReadAsByteArrayAsync())) 
+            using (var ms = new MemoryStream(await compressedContent.ReadAsByteArrayAsync()))
             {
                 await compressor.Decompress(ms, decompressedContentStream).ConfigureAwait(false);
             }
@@ -45,47 +47,18 @@
         /// <param name="output">The output.</param>
         public void CopyHeaders(HttpContent input, HttpContent output)
         {
-            // Allow: {methods}
-            foreach (var allow in input.Headers.Allow)
+            // All other headers
+            foreach (var header in input.Headers)
             {
-                output.Headers.Allow.Add(allow);
+                try
+                {
+                    output.Headers.Add(header.Key, header.Value);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
             }
-
-            // Content-Disposition: {disposition-type}; {disposition-param}
-            output.Headers.ContentDisposition = input.Headers.ContentDisposition;
-
-            // Content-Encoding: {content-encodings}
-            foreach (var encoding in input.Headers.ContentEncoding)
-            {
-                output.Headers.ContentEncoding.Add(encoding);
-            }
-
-            // Content-Language: {languages}
-            foreach (var language in input.Headers.ContentLanguage)
-            {
-                output.Headers.ContentLanguage.Add(language);
-            }
-
-            // Content-Length: {size}
-            output.Headers.ContentLength = input.Headers.ContentLength;
-
-            // Content-Location: {uri}
-            output.Headers.ContentLocation = input.Headers.ContentLocation;
-
-            // Content-MD5: {md5-digest}
-            output.Headers.ContentMD5 = input.Headers.ContentMD5;
-
-            // Content-Range: {range}
-            output.Headers.ContentRange = input.Headers.ContentRange;
-
-            // Content-Type: {media-types}
-            output.Headers.ContentType = input.Headers.ContentType;
-
-            // Expires: {http-date}
-            output.Headers.Expires = input.Headers.Expires;
-
-            // LastModified: {http-date}
-            output.Headers.LastModified = input.Headers.LastModified;
         }
     }
 }

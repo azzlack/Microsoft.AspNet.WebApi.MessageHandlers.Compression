@@ -180,7 +180,8 @@
                 try
                 {
                     // Only compress response if size is larger than treshold (if set)
-                    if (this.contentSizeThreshold == 0){
+                    if (this.contentSizeThreshold == 0)
+                    {
                         response.Content = new CompressedContent(response.Content, compressor);
                     }
                     else if (this.contentSizeThreshold > 0 && response.Content.Headers.ContentLength >= this.contentSizeThreshold)
