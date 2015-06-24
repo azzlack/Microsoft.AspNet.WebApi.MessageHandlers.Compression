@@ -27,11 +27,16 @@
         private readonly HttpContentOperations httpContentOperations;
 
         /// <summary>
+        /// Custom delegate to enable or disable compression.
+        /// </summary>
+        private readonly Predicate<HttpRequestMessage> enableCompression;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
         /// </summary>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(params ICompressor[] compressors)
-            : this(null, 860, compressors)
+            : this(null, 860, null, compressors)
         {
         }
 
@@ -41,7 +46,7 @@
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(int contentSizeThreshold, params ICompressor[] compressors)
-            : this(null, contentSizeThreshold, compressors)
+            : this(null, contentSizeThreshold, null, compressors)
         {
         }
 
@@ -51,7 +56,7 @@
         /// <param name="innerHandler">The inner handler.</param>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(HttpMessageHandler innerHandler, params ICompressor[] compressors)
-            : this(innerHandler, 860, compressors)
+            : this(innerHandler, 860, null, compressors)
         {
         }
 
@@ -62,15 +67,27 @@
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold, params ICompressor[] compressors)
+            : this(innerHandler, contentSizeThreshold, null, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="innerHandler">The inner handler.</param>
+        /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
+        /// <param name="enableCompression">Custom delegate to enable or disable compression.</param>
+        /// <param name="compressors">The compressors.</param>
+        public ServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold, Predicate<HttpRequestMessage> enableCompression, params ICompressor[] compressors)
         {
             if (innerHandler != null)
             {
                 this.InnerHandler = innerHandler;
             }
-            
+
             this.Compressors = compressors;
             this.contentSizeThreshold = contentSizeThreshold;
-
+            this.enableCompression = enableCompression ?? (x => true);
             this.httpContentOperations = new HttpContentOperations();
         }
 
@@ -98,23 +115,26 @@
 
             var process = true;
 
-            try
+            if (enableCompression(request))
             {
-                if (response.Content != null)
+                try
                 {
-                    // Buffer content for further processing
-                    await response.Content.LoadIntoBufferAsync();
+                    if (response.Content != null)
+                    {
+                        // Buffer content for further processing
+                        await response.Content.LoadIntoBufferAsync();
+                    }
+                    else
+                    {
+                        process = false;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
                     process = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                process = false;
 
-                Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.Message);
+                }
             }
 
             // Compress uncompressed responses from the server
