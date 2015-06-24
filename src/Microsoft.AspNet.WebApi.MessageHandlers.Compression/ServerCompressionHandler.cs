@@ -91,17 +91,17 @@
             this.httpContentOperations = new HttpContentOperations();
 
             this.enableCompression = enableCompression ?? (x =>
-            {
-                if (x.Properties["compression:Enable"] == null)
                 {
-                    return true;
-                }
+                    if (!x.Properties.ContainsKey("compression:Enable"))
+                    {
+                        return true;
+                    }
 
-                bool enable;
-                bool.TryParse(x.Properties["compression:Enable"].ToString(), out enable);
+                    bool enable;
+                    bool.TryParse(x.Properties["compression:Enable"].ToString(), out enable);
 
-                return enable;
-            });
+                    return enable;
+                });
         }
 
         /// <summary>
