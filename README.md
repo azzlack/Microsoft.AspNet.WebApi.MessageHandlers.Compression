@@ -35,7 +35,7 @@ Thats it! You should now immediately start experiencing smaller payloads when do
 
 ## Advanced use
 #### Skip compression of requests/responses that are smaller than a specified value
-By default, both `ServerCompressionHandler` and `ClientCompressionHandler` compress everything.  
+By default, both `ServerCompressionHandler` and `ClientCompressionHandler` compress everything larger tham 860 bytes.  
 However, this can be overriden by inserting a threshold as the first parameter like this:
 ```csharp
 var serverCompressionHandler = new ServerCompressionHandler(4096, new GZipCompressor(), new DeflateCompressor());
