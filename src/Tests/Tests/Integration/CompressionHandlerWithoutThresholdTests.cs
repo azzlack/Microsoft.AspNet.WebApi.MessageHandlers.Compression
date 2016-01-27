@@ -1,13 +1,14 @@
 ﻿namespace Tests.Tests.Integration
 {
     using System.Net.Http;
+    using System.Net.Http.Extensions.Compression.Client;
+    using System.Net.Http.Extensions.Compression.Core.Compressors;
     using System.Net.Http.Headers;
     using System.Web.Http;
 
     using global::Tests.Tests.Common;
 
-    using Microsoft.AspNet.WebApi.MessageHandlers.Compression;
-    using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors;
+    using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
 
     using NUnit.Framework;
 

@@ -13,7 +13,7 @@
     using iTextSharp.text;
     using iTextSharp.text.pdf;
 
-    using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Attributes;
+    using Microsoft.AspNet.WebApi.Extensions.Compression.Server.Attributes;
 
     public class FileController : ApiController
     {

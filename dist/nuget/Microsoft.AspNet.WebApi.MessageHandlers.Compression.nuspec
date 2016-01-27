@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Microsoft.AspNet.WebApi.MessageHandlers.Compression</id>
+    <version>2.0.0</version>
+    <title>Microsoft ASP.NET Web API Compression Support</title>
+    <authors>Ove Andersen</authors>
+    <owners>EyeCatch</owners>
+    <description>
+      Module for ASP.NET Web API that enables GZip and Deflate support for incoming and outgoing requests. 
+Please note that this is not an official Microsoft package.
+    </description>
+    <summary>
+      Module for ASP.NET Web API that enables GZip and Deflate support for incoming and outgoing requests. Please note that this is not an official Microsoft package.
+    </summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression</projectUrl>
+    <iconUrl>http://www.eyecatch.no/favicon.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://www.eyecatch.no/licenses/apache-20/</licenseUrl>
+    <copyright>Copyright EyeCatch 2016</copyright>
+    <dependencies>
+        <dependency id="Microsoft.AspNet.WebApi.MessageHandlers.Compression.Client" version="2.0.0" />
+        <dependency id="Microsoft.AspNet.WebApi.MessageHandlers.Compression.Server" version="2.0.0" />
+    </dependencies>
+    <references></references>
+    <tags>aspnet webapi aspnetwebapi compression gzip deflate eyecatch</tags>
+  </metadata>
+</package>

@@ -1,20 +1,17 @@
 ﻿namespace Tests.Tests.Facade
 {
-    using System;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Web.Http;
-
     using global::Tests.Handlers;
     using global::Tests.Tests.Common;
-
-    using Microsoft.AspNet.WebApi.MessageHandlers.Compression;
-    using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors;
+    using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
     using Microsoft.Owin.Testing;
-
     using NUnit.Framework;
-
     using Owin;
+    using System;
+    using System.Net.Http;
+    using System.Net.Http.Extensions.Compression.Client;
+    using System.Net.Http.Extensions.Compression.Core.Compressors;
+    using System.Net.Http.Headers;
+    using System.Web.Http;
 
     [TestFixture]
     public class OwinHostTests
@@ -29,9 +26,9 @@
             this.server = TestServer.Create<OwinStartup>();
 
             var client = new HttpClient(new TraceMessageHandler(new ClientCompressionHandler(this.server.Handler, new GZipCompressor(), new DeflateCompressor())))
-                {
-                    BaseAddress = new Uri("http://localhost:55399")
-                };
+            {
+                BaseAddress = new Uri("http://localhost:55399")
+            };
 
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));

@@ -120,9 +120,17 @@
     <None Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.AspNet.WebApi.MessageHandlers.Compression\Microsoft.AspNet.WebApi.MessageHandlers.Compression.csproj">
+    <ProjectReference Include="..\Client\Client.csproj">
       <Project>{56e19ff7-9ac7-48c5-9ac2-105f55aa16e1}</Project>
-      <Name>Microsoft.AspNet.WebApi.MessageHandlers.Compression</Name>
+      <Name>Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{b7534554-ab6c-44ac-bf34-424dbe596216}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server\Server.csproj">
+      <Project>{ee709c23-849d-43c5-9f47-0b8d8ddb43d8}</Project>
+      <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

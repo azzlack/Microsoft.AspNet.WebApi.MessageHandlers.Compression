@@ -1,9 +1,9 @@
 ﻿namespace Tests
 {
+    using System.Net.Http.Extensions.Compression.Core.Compressors;
     using System.Web.Http;
 
-    using Microsoft.AspNet.WebApi.MessageHandlers.Compression;
-    using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors;
+    using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
 
     public static class WebApiConfig
     {
