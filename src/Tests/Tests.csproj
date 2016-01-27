@@ -118,7 +118,6 @@
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Common\TestFixture.cs" />
-    <Compile Include="Tests\Facade\WebHostTests.cs" />
     <Compile Include="Tests\Facade\OwinHostTests.cs" />
     <Compile Include="Tests\Integration\CompressionHandlerWithoutThresholdTests.cs" />
     <Compile Include="Tests\Integration\CompressionHandlerWithThresholdTests.cs" />

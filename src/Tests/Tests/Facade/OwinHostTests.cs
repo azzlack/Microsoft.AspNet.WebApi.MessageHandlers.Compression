@@ -19,10 +19,14 @@
         private TestServer server;
 
         [TestFixtureSetUp]
-        public void SetUp()
+        public void TestFixtureSetup()
         {
             this.server = TestServer.Create<OwinStartup>();
+        }
 
+        [SetUp]
+        public void SetUp()
+        {
             var client = new HttpClient(new TraceMessageHandler(new ClientCompressionHandler(this.server.Handler, new GZipCompressor(), new DeflateCompressor())))
             {
                 BaseAddress = new Uri("http://localhost:55399")
@@ -35,7 +39,7 @@
         }
 
         [TestFixtureTearDown]
-        public void TearDown()
+        public void TestFixtureTearDown()
         {
             this.server.Dispose();
         }
