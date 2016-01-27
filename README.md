@@ -1,6 +1,6 @@
 Microsoft.AspNet.WebApi.MessageHandlers.Compression
 ===================================================
-[![TeamCity Build Status](https://img.shields.io/teamcity/https/teamcity.knowit.no/e/External_MicrosoftAspNetWebApiExtensionsCompression_General_Release.svg?style=flat-square)](https://teamcity.knowit.no/viewType.html?buildTypeId=External_MicrosoftAspNetWebApiExtensionsCompression_General_Release)  
+[![TeamCity Build Status](https://img.shields.io/teamcity/https/teamcity.knowit.no/e/External_MicrosoftAspNetWebApiExtensionsCompression_General_Release.svg?style=flat-square)](https://teamcity.knowit.no/viewType.html?buildTypeId=External_MicrosoftAspNetWebApiExtensionsCompression_General_Release&tab=buildTypeStatusDiv&branch_External_MicrosoftAspNetWebApiExtensionsCompression_General=__all_branches__)  
 
 Drop-in module for ASP.Net WebAPI that enables `GZip` and `Deflate` support.  
 This module is based on [this blog post by Ben Foster](http://benfoster.io/blog/aspnet-web-api-compression) which in turn is based on this blog post by [Kiran Challa](http://blogs.msdn.com/b/kiranchalla/archive/2012/09/04/handling-compression-accept-encoding-sample.aspx).  
