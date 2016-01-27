@@ -1,9 +1,8 @@
 ﻿namespace System.Net.Http.Extensions.Compression.Core
 {
-    using System;
-    using System.Diagnostics;
     using System.IO;
     using System.Net.Http;
+    using System.Net.Http.Extensions.Compression.Core.Extensions;
     using System.Net.Http.Extensions.Compression.Core.Interfaces;
     using System.Threading.Tasks;
 
@@ -34,30 +33,9 @@
             var decompressedContent = new StreamContent(decompressedContentStream);
 
             // Copy content headers so we know what got sent back
-            this.CopyHeaders(compressedContent, decompressedContent);
+            compressedContent.Headers.CopyTo(decompressedContent.Headers);
 
             return decompressedContent;
-        }
-
-        /// <summary>
-        /// Copies the HTTP headers onto the new response.
-        /// </summary>
-        /// <param name="input">The input.</param>
-        /// <param name="output">The output.</param>
-        public void CopyHeaders(HttpContent input, HttpContent output)
-        {
-            // All other headers
-            foreach (var header in input.Headers)
-            {
-                try
-                {
-                    output.Headers.Add(header.Key, header.Value);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
-            }
         }
     }
 }

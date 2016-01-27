@@ -30,7 +30,7 @@
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
-            config.MessageHandlers.Insert(0, new ServerCompressionHandler(32, new GZipCompressor(), new DeflateCompressor()));
+            config.MessageHandlers.Insert(0, new ServerCompressionHandler(4096, new GZipCompressor(), new DeflateCompressor()));
 
             this.server = new HttpServer(config);
 
@@ -60,6 +60,18 @@
             Assert.IsTrue(response.IsSuccessStatusCode);
             Assert.AreEqual(response.Content.Headers.ContentLength, content.Length);
             Assert.IsFalse(response.Content.Headers.ContentEncoding.Contains("gzip"));
+        }
+
+        [Test]
+        public async void Get_WhenResponseSizeIsLargerThanTreshold_ShouldReturnCompressedContent()
+        {
+            var response = await this.Client.GetAsync("http://localhost:55399/api/file/image");
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.AreNotEqual(response.Content.Headers.ContentLength, content.Length);
+            Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
         }
     }
 }

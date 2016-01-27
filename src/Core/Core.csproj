@@ -37,6 +37,7 @@
     <Compile Include="Compressors\BaseCompressor.cs" />
     <Compile Include="Compressors\DeflateCompressor.cs" />
     <Compile Include="Compressors\GZipCompressor.cs" />
+    <Compile Include="Extensions\HttpContentHeaderExtensions.cs" />
     <Compile Include="HttpContentOperations.cs" />
     <Compile Include="Interfaces\ICompressor.cs" />
     <Compile Include="Models\CompressedContent.cs" />

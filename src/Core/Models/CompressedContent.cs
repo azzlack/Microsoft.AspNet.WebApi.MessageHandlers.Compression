@@ -1,11 +1,10 @@
 ﻿namespace System.Net.Http.Extensions.Compression.Core.Models
 {
     using System;
-    using System.Diagnostics;
     using System.IO;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Extensions.Compression.Core.Extensions;
     using System.Net.Http.Extensions.Compression.Core.Interfaces;
     using System.Threading.Tasks;
 
@@ -87,26 +86,7 @@
         /// </summary>
         private void CopyHeaders()
         {
-            // Remove headers we are going to rewrite and headers with null values
-            var headers =
-                this.originalContent.Headers.Where(
-                    x =>
-                    x.Value != null
-                    && !x.Key.Equals("Content-Length", StringComparison.OrdinalIgnoreCase)
-                    && !x.Key.Equals("Content-Encoding", StringComparison.OrdinalIgnoreCase)).ToList();
-
-            // Copy the other headers
-            foreach (var header in headers)
-            {
-                try
-                {
-                    this.Headers.Add(header.Key, header.Value);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
-            }
+            this.originalContent.Headers.CopyTo(this.Headers, false, false);
 
             // Content-Encoding: {content-encodings}
             this.Headers.ContentEncoding.Add(this.compressor.EncodingType);
