@@ -14,11 +14,9 @@
     using System.Web.Http;
 
     [TestFixture]
-    public class OwinHostTests
+    public class OwinHostTests : TestFixture
     {
         private TestServer server;
-
-        private TestFixture testFixture;
 
         [TestFixtureSetUp]
         public void SetUp()
@@ -33,80 +31,13 @@
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
 
-            this.testFixture = new TestFixture(client);
+            this.Client = client;
         }
 
         [TestFixtureTearDown]
         public void TearDown()
         {
             this.server.Dispose();
-        }
-
-        [Test]
-        public async void Get_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
-        {
-            await this.testFixture.Get_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent();
-        }
-
-        [Test]
-        public async void Get_WhenGivenCustomHeader_ShouldReturnCompressedContentWithCustomHeader()
-        {
-            await this.testFixture.Get_WhenGivenCustomHeader_ShouldReturnCompressedContentWithCustomHeader();
-        }
-
-        [Test]
-        public async void GetImage_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
-        {
-            await this.testFixture.GetImage_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent();
-        }
-
-        [Test]
-        public async void GetImage_WhenAttributeIsConfigured_ShouldReturnUncompressedContent()
-        {
-            await this.testFixture.GetImage_WhenAttributeIsConfigured_ShouldReturnUncompressedContent();
-        }
-
-        [Test]
-        public async void GetPdf_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
-        {
-            await this.testFixture.GetPdf_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent();
-        }
-
-        [TestCase("1")]
-        [TestCase("10")]
-        public async void GetSpecific_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string id)
-        {
-            await this.testFixture.GetSpecific_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(id);
-        }
-
-        [TestCase("Content1")]
-        [TestCase("Content10")]
-        [TestCase("Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10")]
-        public async void Post_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string body)
-        {
-            await this.testFixture.Post_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(body);
-        }
-
-        [TestCase("Content1")]
-        [TestCase("Content10")]
-        [TestCase("Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10Content10")]
-        public async void Post_WhenNestedMessageHandlerIsConfigured_ShouldReturnCompressedContent(string body)
-        {
-            await this.testFixture.Post_WhenNestedMessageHandlerIsConfigured_ShouldReturnCompressedContent(body);
-        }
-
-        [TestCase("1", "Content1")]
-        [TestCase("2", "Content10")]
-        public async void Put_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string id, string body)
-        {
-            await this.testFixture.Put_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(id, body);
-        }
-
-        [TestCase("1")]
-        [TestCase("2")]
-        public async void Delete_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(string id)
-        {
-            await this.testFixture.Delete_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent(id);
         }
     }
 

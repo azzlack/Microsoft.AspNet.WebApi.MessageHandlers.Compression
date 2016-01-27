@@ -1,18 +1,20 @@
 ﻿namespace Tests.Tests.Integration
 {
+    using global::Tests.Tests.Common;
+    using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
+    using NUnit.Framework;
     using System.Net.Http;
     using System.Net.Http.Extensions.Compression.Client;
     using System.Net.Http.Extensions.Compression.Core.Compressors;
     using System.Net.Http.Headers;
     using System.Web.Http;
 
-    using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
-    using NUnit.Framework;
-
     [TestFixture]
     public class CompressionHandlerWithThresholdTests
     {
         private HttpServer server;
+
+        public HttpClient Client { get; set; }
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
@@ -31,12 +33,18 @@
             config.MessageHandlers.Insert(0, new ServerCompressionHandler(32, new GZipCompressor(), new DeflateCompressor()));
 
             this.server = new HttpServer(config);
+
+            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor()));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+
+            this.Client = client;
         }
 
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (this.server != null) 
+            if (this.server != null)
             {
                 this.server.Dispose();
             }
@@ -45,17 +53,12 @@
         [Test]
         public async void Get_WhenResponseSizeIsLessThanTreshold_ShouldReturnUncompressedContent()
         {
-            var client = new HttpClient(new ClientCompressionHandler(this.server, new GZipCompressor(), new DeflateCompressor()));
+            var response = await this.Client.GetAsync("http://localhost:55399/api/test");
 
-            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-
-            var response = await client.GetAsync("http://localhost:55399/api/test");
-            
             var content = await response.Content.ReadAsStringAsync();
 
+            Assert.IsTrue(response.IsSuccessStatusCode);
             Assert.AreEqual(response.Content.Headers.ContentLength, content.Length);
-
             Assert.IsFalse(response.Content.Headers.ContentEncoding.Contains("gzip"));
         }
     }

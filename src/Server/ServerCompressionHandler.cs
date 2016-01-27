@@ -12,7 +12,7 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Message handler for handling gzip/deflate requests/responses on a <see cref="HttpServer"/>.
+    /// Message handler for handling gzip/deflate requests/responses.
     /// </summary>
     public class ServerCompressionHandler : DelegatingHandler
     {
@@ -91,15 +91,20 @@
 
             this.enableCompression = enableCompression ?? (x =>
                 {
-                    if (!x.Properties.ContainsKey("compression:Enable"))
+                    if (x.Headers.AcceptEncoding.All(y => y.Value != "gzip" && y.Value != "deflate"))
                     {
-                        return true;
+                        return false;
                     }
 
-                    bool enable;
-                    bool.TryParse(x.Properties["compression:Enable"].ToString(), out enable);
+                    if (x.Properties.ContainsKey("compression:Enable"))
+                    {
+                        bool enable;
+                        bool.TryParse(x.Properties["compression:Enable"].ToString(), out enable);
 
-                    return enable;
+                        return enable;
+                    }
+
+                    return true;
                 });
         }
 
@@ -129,7 +134,7 @@
 
             try
             {
-                if (response.Content != null)
+                if (process && response.Content != null)
                 {
                     // Buffer content for further processing
                     await response.Content.LoadIntoBufferAsync();
@@ -147,7 +152,7 @@
             }
 
             // Compress uncompressed responses from the server
-            if (process && response.Content != null && request.Headers.AcceptEncoding.Any())
+            if (process && response.Content != null)
             {
                 await this.CompressResponse(request, response);
             }
