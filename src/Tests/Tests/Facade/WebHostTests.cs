@@ -14,6 +14,7 @@
     using System.Threading;
 
     [TestFixture]
+    [Ignore]
     public class WebHostTests : TestFixture
     {
         private Process iisProcess;
