@@ -36,13 +36,19 @@ Thats it! You should now immediately start experiencing smaller payloads when do
 
 ## Advanced use
 #### Skip compression of requests/responses that are smaller than a specified value
-By default, both `ServerCompressionHandler` and `ClientCompressionHandler` compress everything larger tham 860 bytes.  
+By default, both `ServerCompressionHandler` and `ClientCompressionHandler` compress everything larger than 860 bytes.  
 However, this can be overriden by inserting a threshold as the first parameter like this:
 ```csharp
 var serverCompressionHandler = new ServerCompressionHandler(4096, new GZipCompressor(), new DeflateCompressor());
 var clientCompressionHandler = new ClientCompressionHandler(4096, new GZipCompressor(), new DeflateCompressor());
 ```
 The above code will skip compression for any request/response that is smaller than `4096 bytes` / `4 kB`.
+
+#### Disable compression for endpoint
+It is possible to disable compression for a specific endpoint. Just add the `[EnableCompression(false)]` attribute to your endpoint method. (Or the whole controller if you want to disable for all endpoints in it)
+
+#### OWIN Authentication
+When using the OWIN Authentication pipeline, you might encounter errors saying that `Server cannot append header after http headers have been sent`. This is a [bug with OWIN](katanaproject.codeplex.com/discussions/540202), but as of this moment it has not been fixed. The workaround is to install the [Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin/) package and use the included `OwinServerCompressionHandler` instead of the default `ServerCompressionHandler`. This class contains code to detect whether the headers have been sent already and prevent any attempts at compression.  
 
 ## Version history
 #### 2.0.0 (current)
