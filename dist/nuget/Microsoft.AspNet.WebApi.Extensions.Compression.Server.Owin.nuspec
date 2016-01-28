@@ -22,8 +22,8 @@
     <tags>aspnet webapi aspnetwebapi http compression gzip deflate eyecatch</tags>
   </metadata>
   <files>
-	<file src="..\..\src\Server.Owin\bin\Release\Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin.dll" target="lib\net45" />
-	<file src="..\..\src\Server.Owin\bin\Release\Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin.pdb" target="lib\net45" />
+	<file src="..\..\src\Server.Owin\bin\Release\Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin.dll" target="lib\net452" />
+	<file src="..\..\src\Server.Owin\bin\Release\Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin.pdb" target="lib\net452" />
 	<file src="..\..\src\Server.Owin\**\*.cs" exclude="**\obj\**\*.*" target="src" />
   </files>
 </package>
