@@ -1,13 +1,13 @@
 ﻿namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server.Attributes
 {
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
 
     public class CompressionAttribute : ActionFilterAttribute
     {
-        /// <summary>
-        /// Initializes a new instance of the Microsoft.AspNet.WebApi.MessageHandlers.Compression.Attributes.CompressionAttribute class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="CompressionAttribute" /> class.</summary>
         public CompressionAttribute()
         {
             this.Enabled = true;
@@ -17,15 +17,15 @@
         /// <value><c>true</c> if enabled, <c>false</c> if not. The default value is <c>false</c>.</value>
         public bool Enabled { get; set; }
 
-        /// <summary>
-        /// Occurs before the action method is invoked.
-        /// </summary>
+        /// <summary>Executes the action executing asynchronous action.</summary>
         /// <param name="actionContext">The action context.</param>
-        public override void OnActionExecuting(HttpActionContext actionContext)
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A Task.</returns>
+        public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
             actionContext.Request.Properties.Add("compression:Enable", this.Enabled);
 
-            base.OnActionExecuting(actionContext);
+            return base.OnActionExecutingAsync(actionContext, cancellationToken);
         }
     }
 }

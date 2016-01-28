@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Extensions.Compression.Core;
@@ -128,32 +127,20 @@
                 await this.DecompressRequest(request);
             }
 
+            // Perform original action
             var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
+            // Check if response should be compressed
+            // NOTE: This must be done _after_ the response has been created, otherwise the EnableCompression property is not set
             var process = this.enableCompression(request);
 
-            try
-            {
-                if (process && response.Content != null)
-                {
-                    // Buffer content for further processing
-                    await response.Content.LoadIntoBufferAsync();
-                }
-                else
-                {
-                    process = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                process = false;
-
-                Debug.WriteLine(ex.Message);
-            }
-
-            // Compress uncompressed responses from the server
+            // Compress content if it should processed
             if (process && response.Content != null)
             {
+                // Buffer content for further processing.
+                // NOTE: This is needed to properly calculate Content-Length
+                await response.Content.LoadIntoBufferAsync();
+
                 await this.CompressResponse(request, response);
             }
 
