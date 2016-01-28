@@ -33,7 +33,7 @@ Please note that this is not an official Microsoft package.
 	<file src="..\..\src\Client\bin\Release\System.Net.Http.Extensions.Compression.Client.pdb" target="lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac" />
 	<file src="..\..\src\Core\bin\Release\System.Net.Http.Extensions.Compression.Core.dll" target="lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac" />
 	<file src="..\..\src\Core\bin\Release\System.Net.Http.Extensions.Compression.Core.pdb" target="lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac" />
-	<file src="..\..\src\Core\**\*.cs" exclude="**\obj\**\*.*" target="src" />
-	<file src="..\..\src\Client\**\*.cs" exclude="**\obj\**\*.*" target="src" />
+	<file src="..\..\src\Core\**\*.cs" exclude="**\obj\**\*.*;**\AssemblyInfo.cs" target="src" />
+	<file src="..\..\src\Client\**\*.cs" exclude="**\obj\**\*.*;**\AssemblyInfo.cs" target="src" />
   </files>
 </package>

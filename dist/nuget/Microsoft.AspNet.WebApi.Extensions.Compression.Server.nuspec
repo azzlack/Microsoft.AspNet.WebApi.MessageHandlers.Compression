@@ -29,7 +29,7 @@ Please note that this is not an official Microsoft package.
 	<file src="..\..\src\Server\bin\Release\Microsoft.AspNet.WebApi.Extensions.Compression.Server.pdb" target="lib\net45" />
 	<file src="..\..\src\Core\bin\Release\System.Net.Http.Extensions.Compression.Core.dll" target="lib\net45" />
 	<file src="..\..\src\Core\bin\Release\System.Net.Http.Extensions.Compression.Core.pdb" target="lib\net45" />
-	<file src="..\..\src\Core\**\*.cs" exclude="**\obj\**\*.*" target="src" />
-	<file src="..\..\src\Server\**\*.cs" exclude="**\obj\**\*.*" target="src" />
+	<file src="..\..\src\Core\**\*.cs" exclude="**\obj\**\*.*;**\AssemblyInfo.cs" target="src" />
+	<file src="..\..\src\Server\**\*.cs" exclude="**\obj\**\*.*;**\AssemblyInfo.cs" target="src" />
   </files>
 </package>
