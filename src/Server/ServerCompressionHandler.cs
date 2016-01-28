@@ -137,9 +137,11 @@
             // Compress content if it should processed
             if (process && response.Content != null)
             {
-                // Buffer content for further processing.
-                // NOTE: This is needed to properly calculate Content-Length
-                await response.Content.LoadIntoBufferAsync();
+                // Buffer content for further processing if content length is not known
+                if (!this.ContentLengthKnown(response))
+                {
+                    await response.Content.LoadIntoBufferAsync();
+                }
 
                 await this.CompressResponse(request, response);
             }
@@ -209,6 +211,29 @@
                     throw new Exception(string.Format("Unable to decompress request using compressor '{0}'", compressor.GetType()), ex);
                 }
             }
+        }
+
+        /// <summary>Checks if the response content length is known.</summary>
+        /// <param name="response">The response.</param>
+        /// <returns>true if it is known, false if it it is not.</returns>
+        private bool ContentLengthKnown(HttpResponseMessage response)
+        {
+            if (response?.Content == null)
+            {
+                return false;
+            }
+
+            if (response.Content is StringContent)
+            {
+                return true;
+            }
+
+            if (response.Content is ByteArrayContent)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
