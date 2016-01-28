@@ -1,5 +1,6 @@
 ﻿namespace Tests.Tests.Common
 {
+    using global::Tests.Extensions;
     using global::Tests.Models;
     using Newtonsoft.Json;
     using NUnit.Framework;
@@ -16,15 +17,11 @@
         {
             var response = await this.Client.GetAsync("http://localhost:55399/api/test");
 
-            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+            Console.Write(await response.ToTestString());
 
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
-            var content = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
-
-            var result = JsonConvert.DeserializeObject<TestModel>(content);
+            var result = JsonConvert.DeserializeObject<TestModel>(await response.Content.ReadAsStringAsync());
 
             Assert.AreEqual("Get()", result.Data);
         }
@@ -34,11 +31,9 @@
         {
             var response = await this.Client.GetAsync("http://localhost:55399/api/test/customheader");
 
-            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
-
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
-            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
+            Console.Write(await response.ToTestString());
 
             Assert.IsTrue(response.Headers.Contains("DataServiceVersion"), "The response did not contain the DataServiceVersion header");
         }
@@ -53,25 +48,34 @@
 
             var response = await this.Client.SendAsync(request);
 
-            Console.WriteLine("Content-Encoding: {0}", string.Join(", ", response.Content.Headers.ContentEncoding));
+            Console.Write(await response.ToTestString());
 
             Assert.IsFalse(response.Content.Headers.ContentEncoding.Contains("gzip"), "The server returned compressed content");
         }
 
         [Test]
+        public async void Get_WhenResponseHeaderIsModified_ShouldReturnModifiedResponse()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:55399/api/test/redirect");
+
+            var response = await this.Client.SendAsync(request);
+
+            Console.Write(await response.ToTestString());
+
+            Assert.AreEqual("http://localhost:55399/api/test", response.Headers.Location.ToString());
+        }
+
+        [Test]
         public async void GetImage_WhenMessageHandlerIsConfigured_ShouldReturnCompressedContent()
         {
-
             var response = await this.Client.GetAsync("http://localhost:55399/api/file/image");
 
-            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+            Console.Write(await response.ToTestString());
 
             Assert.IsTrue(response.Content.Headers.ContentType.MediaType == "image/png");
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
             var content = await response.Content.ReadAsByteArrayAsync();
-
-            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
             Assert.AreEqual(749, response.Content.Headers.ContentLength);
             Assert.AreEqual(4596, content.Length);
@@ -83,14 +87,12 @@
 
             var response = await this.Client.GetAsync("http://localhost:55399/api/file/uncompressedimage");
 
-            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+            Console.Write(await response.ToTestString());
 
             Assert.IsTrue(response.Content.Headers.ContentType.MediaType == "image/png");
             Assert.IsFalse(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
             var content = await response.Content.ReadAsByteArrayAsync();
-
-            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
             Assert.AreEqual(4596, content.Length);
         }
@@ -100,14 +102,12 @@
         {
             var response = await this.Client.GetAsync("http://localhost:55399/api/file/pdf");
 
-            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+            Console.Write(await response.ToTestString());
 
             Assert.IsTrue(response.Content.Headers.ContentType.MediaType == "application/pdf");
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
             var content = await response.Content.ReadAsByteArrayAsync();
-
-            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
             Assert.AreEqual(16538, content.Length);
         }
@@ -118,13 +118,11 @@
         {
             var response = await this.Client.GetAsync("http://localhost:55399/api/test/" + id);
 
-            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+            Console.Write(await response.ToTestString());
 
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
             var content = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
             var result = JsonConvert.DeserializeObject<TestModel>(content);
 
@@ -138,13 +136,11 @@
         {
             var response = await this.Client.PostAsync("http://localhost:55399/api/test", new StringContent(JsonConvert.SerializeObject(new TestModel(body)), Encoding.UTF8, "application/json"));
 
-            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+            Console.Write(await response.ToTestString());
 
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
             var content = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
             var result = JsonConvert.DeserializeObject<TestModel>(content);
 
@@ -158,13 +154,11 @@
         {
             var response = await this.Client.PostAsync("http://localhost:55399/api/test", new StringContent(JsonConvert.SerializeObject(new TestModel(body)), Encoding.UTF8, "application/json"));
 
-            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+            Console.Write(await response.ToTestString());
 
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
             var content = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
             var result = JsonConvert.DeserializeObject<TestModel>(content);
 
@@ -177,13 +171,11 @@
         {
             var response = await this.Client.PutAsync("http://localhost:55399/api/test/" + id, new StringContent(JsonConvert.SerializeObject(new TestModel(body)), Encoding.UTF8, "application/json"));
 
-            Console.WriteLine("Content: {0}", await response.Content.ReadAsStringAsync());
+            Console.Write(await response.ToTestString());
 
             Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
 
             var content = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine("Content-Length: {0}", response.Content.Headers.ContentLength);
 
             var result = JsonConvert.DeserializeObject<TestModel>(content);
 

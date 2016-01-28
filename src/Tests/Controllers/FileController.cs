@@ -1,5 +1,9 @@
 ﻿namespace Tests.Controllers
 {
+    using global::Tests.Models;
+    using iTextSharp.text;
+    using iTextSharp.text.pdf;
+    using Microsoft.AspNet.WebApi.Extensions.Compression.Server.Attributes;
     using System;
     using System.IO;
     using System.Net;
@@ -8,13 +12,6 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    using global::Tests.Models;
-
-    using iTextSharp.text;
-    using iTextSharp.text.pdf;
-
-    using Microsoft.AspNet.WebApi.Extensions.Compression.Server.Attributes;
-
     public class FileController : ApiController
     {
         [Route("api/file/image")]
@@ -22,7 +19,7 @@
         {
             using (var ms = new MemoryStream())
             {
-                var baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory);
+                var baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent;
                 var filePath = baseDir.FullName + "/Content/Images/app-icon-1024.png";
 
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
@@ -32,9 +29,9 @@
                 }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK)
-                                 {
-                                     Content = new ByteArrayContent(ms.ToArray())
-                                 };
+                {
+                    Content = new ByteArrayContent(ms.ToArray())
+                };
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
 
                 return result;
@@ -47,7 +44,7 @@
         {
             using (var ms = new MemoryStream())
             {
-                var baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory);
+                var baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent;
                 var filePath = baseDir.FullName + "/Content/Images/app-icon-1024.png";
 
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
@@ -80,7 +77,7 @@
             // Write PDF document
             document.Open();
 
-            var baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory);
+            var baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent;
 
             var logoHeader = Image.GetInstance(baseDir.FullName + "/Content/Images/app-icon-1024.png");
             logoHeader.ScalePercent(10);

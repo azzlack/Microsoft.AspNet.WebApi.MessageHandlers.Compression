@@ -1,10 +1,11 @@
 ﻿namespace Tests.Controllers
 {
+    using global::Tests.Models;
+    using System;
+    using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
-
-    using global::Tests.Models;
 
     public class TestController : ApiController
     {
@@ -18,6 +19,15 @@
         {
             var response = this.Request.CreateResponse(new TestModel("Get()"));
             response.Headers.Add("DataServiceVersion", "3.0");
+
+            return response;
+        }
+
+        [Route("api/test/redirect")]
+        public async Task<HttpResponseMessage> GetRedirect()
+        {
+            var response = this.Request.CreateResponse(HttpStatusCode.Redirect);
+            response.Headers.Location = new Uri($"{this.Request.RequestUri.Scheme}://{this.Request.RequestUri.Authority}/api/test");
 
             return response;
         }

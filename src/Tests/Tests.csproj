@@ -108,6 +108,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Extensions\HttpContentExtensions.cs" />
+    <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Global.asax.cs">
