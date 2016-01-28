@@ -6,7 +6,7 @@ Drop-in module for ASP.Net WebAPI that enables `GZip` and `Deflate` support.
 This module is based on [this blog post by Ben Foster](http://benfoster.io/blog/aspnet-web-api-compression) which in turn is based on this blog post by [Kiran Challa](http://blogs.msdn.com/b/kiranchalla/archive/2012/09/04/handling-compression-accept-encoding-sample.aspx).  
 This code improves on their work by adding several new options, as well as fixing some issues with the original code.
 
-![NuGet Package Version](http://img.shields.io/nuget/v/Microsoft.AspNet.WebApi.MessageHandlers.Compression.svg?style=flat-square)&nbsp;&nbsp;![NuGet Package Downloads](http://img.shields.io/nuget/dt/Microsoft.AspNet.WebApi.MessageHandlers.Compression.svg?style=flat-square)
+![NuGet Package Version](http://img.shields.io/nuget/v/Microsoft.AspNet.WebApi.Extensions.Compression.Server.svg?style=flat-square)&nbsp;&nbsp;![NuGet Package Downloads](http://img.shields.io/nuget/dt/Microsoft.AspNet.WebApi.Extensions.Compression.Server.svg?style=flat-square)
 
 ## How to use
 ### Server side
@@ -45,7 +45,16 @@ var clientCompressionHandler = new ClientCompressionHandler(4096, new GZipCompre
 The above code will skip compression for any request/response that is smaller than `4096 bytes` / `4 kB`.
 
 ## Version history
-#### [1.3.0](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.3.0)  (current)
+#### 2.0.0 (current)
+* Fixed [UWP projects referencing Microsoft.AspNet.WebApi.MessageHandlers.Compression does not compile](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/17)
+* Fixed [Remove Microsoft.Bcl dependency in .net4.5](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/23)
+* Fixed [compressing even when accept encoding is null](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/21)
+* Fixed [Possible issue while redirecting after de-compression](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/11) and [Owin UseCookieAuthentication does not work anymore after we insert ServerCompressionHandler](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/22)
+* Fixed [Async throttled actions with disabled compression](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/20)
+* Improved performance a little by not always buffering the response. See #6 
+* Fixed [Server cannot append header after HTTP headers have been sent](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/13). NOTE: The fix is in a [separate package](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin/)
+
+#### [1.3.0](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/1.3.0)
 * Added attribute for disable compression for certain routes
 * Fixed clearing of non-standard properties when compressing and decompressing
 
