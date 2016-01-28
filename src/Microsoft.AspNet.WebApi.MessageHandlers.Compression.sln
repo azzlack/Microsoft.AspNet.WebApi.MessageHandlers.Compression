@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{B7534554-AB6C-44AC-BF34-424DBE596216}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Owin", "Server.Owin\Server.Owin.csproj", "{DAA0A504-7ED7-4906-9D6B-FB566AE47084}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,12 @@ Global
 		{B7534554-AB6C-44AC-BF34-424DBE596216}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7534554-AB6C-44AC-BF34-424DBE596216}.Test|Any CPU.ActiveCfg = Test|Any CPU
 		{B7534554-AB6C-44AC-BF34-424DBE596216}.Test|Any CPU.Build.0 = Test|Any CPU
+		{DAA0A504-7ED7-4906-9D6B-FB566AE47084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA0A504-7ED7-4906-9D6B-FB566AE47084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA0A504-7ED7-4906-9D6B-FB566AE47084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA0A504-7ED7-4906-9D6B-FB566AE47084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA0A504-7ED7-4906-9D6B-FB566AE47084}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{DAA0A504-7ED7-4906-9D6B-FB566AE47084}.Test|Any CPU.Build.0 = Test|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

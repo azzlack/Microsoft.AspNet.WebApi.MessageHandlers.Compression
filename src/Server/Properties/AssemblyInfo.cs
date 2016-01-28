@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Server")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Microsoft.AspNet.WebApi.Extensions.Compression.Server")]
+[assembly: AssemblyDescription("Module for ASP.NET WebApi that enables GZip and Deflate support for incoming and outgoing requests")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Server")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("EyeCatch")]
+[assembly: AssemblyProduct("Microsoft.AspNet.WebApi.Extensions.Compression.Server")]
+[assembly: AssemblyCopyright("Copyright © EyeCatch 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

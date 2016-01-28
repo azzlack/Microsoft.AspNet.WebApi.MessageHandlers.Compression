@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin</id>
+    <version>2.0.0</version>
+    <title>OWIN support for Microsoft.AspNet.WebApi.Extensions.Compression.Server</title>
+    <authors>Ove Andersen</authors>
+    <owners>EyeCatch</owners>
+    <description>Package for supporting OWIN when using Microsoft ASP.NET Web API Compression Support</description>
+    <summary>Package for supporting OWIN when using Microsoft ASP.NET Web API Compression Support.</summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression</projectUrl>
+    <iconUrl>http://www.eyecatch.no/favicon.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://www.eyecatch.no/licenses/apache-20/</licenseUrl>
+    <copyright>Copyright EyeCatch 2016</copyright>
+    <dependencies>
+        <dependency id="Microsoft.AspNet.WebApi.Owin" version="5.2.0" />
+        <dependency id="Microsoft.AspNet.WebApi.Extensions.Compression.Server" version="2.0.0" />
+    </dependencies>
+    <references></references>
+    <tags>aspnet webapi aspnetwebapi http compression gzip deflate eyecatch</tags>
+  </metadata>
+  <files>
+	<file src="..\..\src\Server.Owin\bin\Release\Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin.dll" target="lib\net45" />
+	<file src="..\..\src\Server.Owin\bin\Release\Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin.pdb" target="lib\net45" />
+	<file src="..\..\src\Server.Owin\**\*.cs" exclude="**\obj\**\*.*" target="src" />
+  </files>
+</package>

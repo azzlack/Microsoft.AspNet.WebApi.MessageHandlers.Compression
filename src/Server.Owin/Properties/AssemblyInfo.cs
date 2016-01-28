@@ -1,18 +1,25 @@
 ﻿using System.Reflection;
-using System.Resources;
+using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("System.Net.Http.Extensions.Compression.Client")]
-[assembly: AssemblyDescription("Module for Microsoft HTTP Client that enables GZip and Deflate support for incoming and outgoing requests")]
+[assembly: AssemblyTitle("Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin")]
+[assembly: AssemblyDescription("OWIN support for Microsoft.AspNet.WebApi.Extensions.Compression.Server")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EyeCatch")]
-[assembly: AssemblyProduct("System.Net.Http.Extensions.Compression.Client")]
+[assembly: AssemblyProduct("Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin")]
 [assembly: AssemblyCopyright("Copyright © EyeCatch 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: NeutralResourcesLanguage("en")]
+
+// Setting ComVisible to false makes the types in this assembly not visible 
+// to COM components.  If you need to access a type in this assembly from 
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
+
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("daa0a504-7ed7-4906-9d6b-fb566ae47084")]
 
 // Version information for an assembly consists of the following four values:
 //

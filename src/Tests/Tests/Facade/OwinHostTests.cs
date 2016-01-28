@@ -5,7 +5,7 @@
     using global::Tests.Models;
     using global::Tests.Tests.Common;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
+    using Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Testing;
@@ -61,27 +61,26 @@
 
             Assert.AreEqual(loginModel.ReturnUrl, response.Headers.Location.ToString());
         }
-    }
-
-    public class OwinStartup
-    {
-        public void Configuration(IAppBuilder appBuilder)
+        public class OwinStartup
         {
-            var config = new HttpConfiguration();
-            config.MapHttpAttributeRoutes();
-            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
+            public void Configuration(IAppBuilder appBuilder)
+            {
+                var config = new HttpConfiguration();
+                config.MapHttpAttributeRoutes();
+                config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
 
-            // Add compression message handler
-            config.MessageHandlers.Insert(0, new ServerCompressionHandler(0, new GZipCompressor(), new DeflateCompressor()));
+                // Add compression message handler
+                config.MessageHandlers.Insert(0, new OwinServerCompressionHandler(0, new GZipCompressor(), new DeflateCompressor()));
 
-            appBuilder.UseCookieAuthentication(
-                new CookieAuthenticationOptions()
-                {
-                    AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                    LoginPath = new PathString("/api/test/login")
-                });
+                appBuilder.UseCookieAuthentication(
+                    new CookieAuthenticationOptions()
+                    {
+                        AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                        LoginPath = new PathString("/api/test/login")
+                    });
 
-            appBuilder.UseWebApi(config);
+                appBuilder.UseWebApi(config);
+            }
         }
     }
 }
