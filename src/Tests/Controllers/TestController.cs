@@ -1,14 +1,20 @@
 ﻿namespace Tests.Controllers
 {
     using global::Tests.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.Owin.Security;
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using System.Web.Http;
 
     public class TestController : ApiController
     {
+        private IAuthenticationManager Authentication => this.Request.GetOwinContext().Authentication;
+
         public async Task<HttpResponseMessage> Get()
         {
             return this.Request.CreateResponse(new TestModel("Get()"));
@@ -41,6 +47,31 @@
         public async Task<HttpResponseMessage> Post(TestModel m)
         {
             return this.Request.CreateResponse(m);
+        }
+
+        [HttpPost]
+        [Route("api/test/login")]
+        public async Task<HttpResponseMessage> Login(LoginModel m)
+        {
+            if (m.Username == m.Password)
+            {
+                this.Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                this.Authentication.SignIn(
+                    new AuthenticationProperties
+                    {
+                        IsPersistent = false,
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1),
+                        RedirectUri = m.ReturnUrl
+                    },
+                    new ClaimsIdentity(new List<Claim>() { new Claim(ClaimTypes.NameIdentifier, m.Username) }, DefaultAuthenticationTypes.ApplicationCookie));
+
+                var response = this.Request.CreateResponse(HttpStatusCode.Redirect);
+                response.Headers.Location = new Uri(m.ReturnUrl);
+
+                return response;
+            }
+
+            return this.Request.CreateResponse(HttpStatusCode.Unauthorized);
         }
 
         [HttpPut]
