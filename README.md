@@ -45,17 +45,17 @@ var clientCompressionHandler = new ClientCompressionHandler(4096, new GZipCompre
 The above code will skip compression for any request/response that is smaller than `4096 bytes` / `4 kB`.
 
 #### Disable compression for endpoint
-It is possible to disable compression for a specific endpoint. Just add the `[EnableCompression(false)]` attribute to your endpoint method. (Or the whole controller if you want to disable for all endpoints in it)
+It is possible to disable compression for a specific endpoint. Just add the `[Compression(Enabled = false)]` attribute to your endpoint method. (Or the whole controller if you want to disable for all endpoints in it)
 
 #### OWIN Authentication
-When using the OWIN Authentication pipeline, you might encounter errors saying that `Server cannot append header after http headers have been sent`. This is a [bug with OWIN](katanaproject.codeplex.com/discussions/540202), but as of this moment it has not been fixed.  
+When using the OWIN Authentication pipeline, you might encounter errors saying that `Server cannot append header after http headers have been sent`. This is a [bug with OWIN](http://katanaproject.codeplex.com/discussions/540202), but as of this moment it has not been fixed.  
 
 The workaround is to install the [Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin/) package and use the included `OwinServerCompressionHandler` instead of the default `ServerCompressionHandler`. This class contains code to detect whether the headers have been sent already and prevent any attempts at compression.  
 
 ## Version history
 #### 2.0.0 (current)
 * Fixed [UWP projects referencing Microsoft.AspNet.WebApi.MessageHandlers.Compression does not compile](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/17)
-* Fixed [Remove Microsoft.Bcl dependency in .net4.5](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/23)
+* Fixed [Remove Microsoft.Bcl dependency in .NET 4.5](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/23)
 * Fixed [compressing even when accept encoding is null](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/21)
 * Fixed [Possible issue while redirecting after de-compression](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/11) and [Owin UseCookieAuthentication does not work anymore after we insert ServerCompressionHandler](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/22)
 * Fixed [Async throttled actions with disabled compression](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/20)

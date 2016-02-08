@@ -23,7 +23,7 @@
         /// <returns>A Task.</returns>
         public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            actionContext.Request.Properties.Add("compression:Enable", this.Enabled);
+            actionContext.Request.Properties["compression:Enable"] = this.Enabled;
 
             return base.OnActionExecutingAsync(actionContext, cancellationToken);
         }
