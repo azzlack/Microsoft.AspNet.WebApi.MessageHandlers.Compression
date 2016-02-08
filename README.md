@@ -1,4 +1,4 @@
-Microsoft.AspNet.WebApi.MessageHandlers.Compression
+Compression support for ASP.NET WebAPI and HttpClient
 ===================================================
 [![TeamCity Build Status](https://img.shields.io/teamcity/https/teamcity.knowit.no/e/External_MicrosoftAspNetWebApiExtensionsCompression_General_Release.svg?style=flat-square)](https://teamcity.knowit.no/viewType.html?buildTypeId=External_MicrosoftAspNetWebApiExtensionsCompression_General_Release&tab=buildTypeStatusDiv&branch_External_MicrosoftAspNetWebApiExtensionsCompression_General=__all_branches__)  
 
