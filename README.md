@@ -45,7 +45,7 @@ var clientCompressionHandler = new ClientCompressionHandler(4096, new GZipCompre
 The above code will skip compression for any request/response that is smaller than `4096 bytes` / `4 kB`.
 
 #### Disable compression for endpoint
-It is possible to disable compression for a specific endpoint. Just add the `[EnableCompression(false)]` attribute to your endpoint method. (Or the whole controller if you want to disable for all endpoints in it)
+It is possible to disable compression for a specific endpoint. Just add the `[Compression(Enabled = false)]` attribute to your endpoint method. (Or the whole controller if you want to disable for all endpoints in it)
 
 #### OWIN Authentication
 When using the OWIN Authentication pipeline, you might encounter errors saying that `Server cannot append header after http headers have been sent`. This is a [bug with OWIN](http://katanaproject.codeplex.com/discussions/540202), but as of this moment it has not been fixed.  
