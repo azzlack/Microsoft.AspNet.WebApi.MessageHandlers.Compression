@@ -53,7 +53,12 @@ When using the OWIN Authentication pipeline, you might encounter errors saying t
 The workaround is to install the [Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin/) package and use the included `OwinServerCompressionHandler` instead of the default `ServerCompressionHandler`. This class contains code to detect whether the headers have been sent already and prevent any attempts at compression.  
 
 ## Version history
-#### 2.0.0 (current)
+#### 2.0.3 (current)
+* [Fixed unnecessary dependency on .NET 4.5.2](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/28)
+* [Fixed System.ArgumentException in CompressionAttribute](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/25) (Thanks to [SneakyMax](https://github.com/SneakyMax))
+* Various readme fixes (Thanks to [wiltodelta](https://github.com/wiltodelta), [IainCole](https://github.com/IainCole), [coni2k](https://github.com/coni2k) and [altumano](https://github.com/altumano))
+
+#### 2.0.0
 * Fixed [UWP projects referencing Microsoft.AspNet.WebApi.MessageHandlers.Compression does not compile](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/17)
 * Fixed [Remove Microsoft.Bcl dependency in .NET 4.5](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/23)
 * Fixed [compressing even when accept encoding is null](https://github.com/azzlack/Microsoft.AspNet.WebApi.MessageHandlers.Compression/issues/21)
