@@ -1,4 +1,6 @@
-﻿namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
+﻿using System.Diagnostics;
+
+namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
 {
     using System;
     using System.Collections.Generic;
@@ -173,13 +175,20 @@
             // Compress content if it should processed
             if (process && response.Content != null)
             {
-                // Buffer content for further processing if content length is not known
-                if (!this.ContentLengthKnown(response))
+                try
                 {
-                    await response.Content.LoadIntoBufferAsync();
-                }
+                    // Buffer content for further processing if content length is not known
+                    if (!this.ContentLengthKnown(response))
+                    {
+                        await response.Content.LoadIntoBufferAsync();
+                    }
 
-                await this.CompressResponse(request, response);
+                    await this.CompressResponse(request, response);
+                }
+                catch (ObjectDisposedException x)
+                {
+                    Trace.TraceError($"Could not compress request, as response.Content had already been disposed: {x.Message}");
+                }
             }
 
             return response;
