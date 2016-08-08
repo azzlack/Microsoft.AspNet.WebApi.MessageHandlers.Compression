@@ -36,7 +36,7 @@
         [SetUp]
         public void SetUp()
         {
-            var client = new HttpClient(new TraceMessageHandler(new ClientCompressionHandler(this.server.Handler, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance))))
+            var client = new HttpClient(new TraceMessageHandler(new ClientCompressionHandler(this.server.Handler, new GZipCompressor(), new DeflateCompressor())))
             {
                 BaseAddress = new Uri("http://localhost:55399")
             };
