@@ -29,6 +29,15 @@
             return response;
         }
 
+        [Route("api/test/customcontentencoding")]
+        public async Task<HttpResponseMessage> GetCustomContentEncoding()
+        {
+            var response = this.Request.CreateResponse(new TestModel("Get()"));
+            response.Content.Headers.ContentEncoding.Add("lol");
+
+            return response;
+        }
+
         [Route("api/test/redirect")]
         public async Task<HttpResponseMessage> GetRedirect()
         {

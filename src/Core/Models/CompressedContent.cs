@@ -86,7 +86,7 @@
         /// </summary>
         private void CopyHeaders()
         {
-            this.originalContent.Headers.CopyTo(this.Headers, false, false);
+            this.originalContent.Headers.CopyTo(this.Headers, false);
 
             // Content-Encoding: {content-encodings}
             this.Headers.ContentEncoding.Add(this.compressor.EncodingType);
