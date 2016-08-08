@@ -26,12 +26,12 @@
                 {
                     if (!handleContentLength && header.Key.Equals("Content-Length", StringComparison.OrdinalIgnoreCase))
                     {
-                        return;
+                        continue;
                     }
 
                     if (!handleContentEncoding && header.Key.Equals("Content-Encoding", StringComparison.OrdinalIgnoreCase))
                     {
-                        return;
+                        continue;
                     }
 
                     if (!handleChangedValues)
