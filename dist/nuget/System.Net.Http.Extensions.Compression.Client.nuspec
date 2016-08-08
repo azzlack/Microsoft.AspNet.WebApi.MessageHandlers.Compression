@@ -19,12 +19,7 @@ Please note that this is not an official Microsoft package.
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>http://www.eyecatch.no/licenses/apache-20/</licenseUrl>
     <copyright>Copyright EyeCatch 2016</copyright>
-    <dependencies>
-      <group>
-        <dependency id="Microsoft.Net.Http" version="2.2.29" />
-        <dependency id="Microsoft.Bcl.Compression" version="3.9.85" />
-      </group>
-    </dependencies>
+    <dependencies></dependencies>
     <references></references>
     <tags>aspnet webapi aspnetwebapi http compression gzip deflate eyecatch</tags>
   </metadata>
