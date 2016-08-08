@@ -31,11 +31,21 @@
         {
             var response = await this.Client.GetAsync("http://localhost:55399/api/test/customheader");
 
-            Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
-
             Console.Write(await response.ToTestString());
 
+            Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
             Assert.IsTrue(response.Headers.Contains("DataServiceVersion"), "The response did not contain the DataServiceVersion header");
+        }
+
+        [Test]
+        public async void Get_WhenGivenCustomContentEncoding_ShouldReturnCompressedContentWithCustomContentEncoding()
+        {
+            var response = await this.Client.GetAsync("http://localhost:55399/api/test/customcontentencoding");
+
+            Console.WriteLine($"Content-Encoding: {string.Join(", ", response.Content.Headers.ContentEncoding)}");
+
+            Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("gzip"));
+            Assert.IsTrue(response.Content.Headers.ContentEncoding.Contains("lol"));
         }
 
         [Test]
