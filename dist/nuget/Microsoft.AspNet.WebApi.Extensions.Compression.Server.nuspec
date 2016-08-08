@@ -20,6 +20,7 @@ Please note that this is not an official Microsoft package.
     <licenseUrl>http://www.eyecatch.no/licenses/apache-20/</licenseUrl>
     <copyright>Copyright EyeCatch 2016</copyright>
     <dependencies>
+        <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.0" />
     </dependencies>
     <references></references>
     <tags>aspnet webapi aspnetwebapi http compression gzip deflate eyecatch</tags>
