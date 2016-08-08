@@ -2,11 +2,13 @@
 {
     using global::Tests.Extensions;
     using global::Tests.Tests.Common;
+
     using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
     using NUnit.Framework;
     using System;
     using System.Net.Http;
     using System.Net.Http.Extensions.Compression.Client;
+    using System.Net.Http.Extensions.Compression.Core;
     using System.Net.Http.Extensions.Compression.Core.Compressors;
     using System.Net.Http.Headers;
     using System.Web.Http;

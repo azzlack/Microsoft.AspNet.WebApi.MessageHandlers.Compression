@@ -1,17 +1,5 @@
 ﻿namespace Tests.Tests.Facade
 {
-    using global::Tests.Extensions;
-    using global::Tests.Handlers;
-    using global::Tests.Models;
-    using global::Tests.Tests.Common;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin;
-    using Microsoft.Owin;
-    using Microsoft.Owin.Security.Cookies;
-    using Microsoft.Owin.Testing;
-    using Newtonsoft.Json;
-    using NUnit.Framework;
-    using Owin;
     using System;
     using System.Net.Http;
     using System.Net.Http.Extensions.Compression.Client;
@@ -20,7 +8,23 @@
     using System.Text;
     using System.Web.Http;
 
+    using global::Tests.Extensions;
+    using global::Tests.Handlers;
+    using global::Tests.Models;
+    using global::Tests.Tests.Common;
+
+    using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
+    using Microsoft.AspNet.WebApi.Extensions.Compression.Server.Owin;
+    using Microsoft.Owin;
+    using Microsoft.Owin.Security.Cookies;
+    using Microsoft.Owin.Testing;
+
+    using Newtonsoft.Json;
+
+    using NUnit.Framework;
+
+    using Owin;
 
     [TestFixture]
     public class OwinHostTests : TestFixture
@@ -63,6 +67,7 @@
 
             Assert.AreEqual(loginModel.ReturnUrl, response.Headers.Location.ToString());
         }
+
         public class OwinStartup
         {
             public void Configuration(IAppBuilder appBuilder)

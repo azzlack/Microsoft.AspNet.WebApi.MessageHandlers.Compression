@@ -32,12 +32,12 @@
         {
             if (content == null)
             {
-                throw new ArgumentNullException("content");
+                throw new ArgumentNullException(nameof(content));
             }
 
             if (compressor == null)
             {
-                throw new ArgumentNullException("compressor");
+                throw new ArgumentNullException(nameof(compressor));
             }
 
             this.originalContent = content;
@@ -64,11 +64,11 @@
         /// <param name="stream">The target stream.</param>
         /// <param name="context">Information about the transport (channel binding token, for example). This parameter may be null.</param>
         /// <returns>Returns <see cref="T:System.Threading.Tasks.Task" />.The task object representing the asynchronous operation.</returns>
-        protected async override Task SerializeToStreamAsync(Stream stream, TransportContext context)
+        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             // Read and compress stream
