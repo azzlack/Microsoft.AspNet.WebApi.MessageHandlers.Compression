@@ -94,7 +94,7 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
             this.Compressors = compressors;
             this.contentSizeThreshold = contentSizeThreshold;
             this.httpContentOperations = new HttpContentOperations();
-            this.streamManager = new StreamManager();
+            this.streamManager = new RecyclableStreamManager();
 
             this.enableCompression = enableCompression ?? (x =>
             {
@@ -223,6 +223,13 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
             {
                 try
                 {
+                    // Only compress response if not already compressed
+                    if (response.Content?.Headers.ContentEncoding != null 
+                        && response.Content.Headers.ContentEncoding.Contains(compressor.EncodingType))
+                    {
+                        return;
+                    }
+
                     // Only compress response if size is larger than treshold (if set)
                     if (this.contentSizeThreshold == 0)
                     {

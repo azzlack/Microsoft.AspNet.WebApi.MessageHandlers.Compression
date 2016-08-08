@@ -62,6 +62,7 @@
 
             Console.Write(await response.ToTestString());
 
+            Assert.AreEqual(29, response.Content.Headers.ContentLength);
             Assert.AreEqual("http://localhost:55399/api/test", response.Headers.Location.ToString());
         }
 

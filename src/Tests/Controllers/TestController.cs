@@ -33,6 +33,8 @@
         public async Task<HttpResponseMessage> GetRedirect()
         {
             var response = this.Request.CreateResponse(HttpStatusCode.Redirect);
+            response.Content = new ByteArrayContent(new byte[1024]);
+            response.Content.Headers.ContentLength = 1024;
             response.Headers.Location = new Uri($"{this.Request.RequestUri.Scheme}://{this.Request.RequestUri.Authority}/api/test");
 
             return response;

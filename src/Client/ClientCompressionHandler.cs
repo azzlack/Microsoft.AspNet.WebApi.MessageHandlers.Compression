@@ -25,6 +25,7 @@
         /// The HTTP content operations
         /// </summary>
         private readonly HttpContentOperations httpContentOperations;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientCompressionHandler" /> class.
         /// </summary>

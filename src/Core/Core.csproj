@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\IStreamManager.cs" />
     <Compile Include="Models\CompressedContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StreamManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http">

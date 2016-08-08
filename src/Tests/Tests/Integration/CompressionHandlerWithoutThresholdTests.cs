@@ -5,6 +5,7 @@
     using NUnit.Framework;
     using System.Net.Http;
     using System.Net.Http.Extensions.Compression.Client;
+    using System.Net.Http.Extensions.Compression.Core;
     using System.Net.Http.Extensions.Compression.Core.Compressors;
     using System.Net.Http.Headers;
     using System.Web.Http;
@@ -36,7 +37,7 @@
         [SetUp]
         public void SetUp()
         {
-            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance)));
+            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor()));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
 

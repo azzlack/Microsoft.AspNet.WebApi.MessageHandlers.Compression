@@ -17,7 +17,7 @@
                 defaults: new { id = RouteParameter.Optional });
 
             // Add compression message handler
-            config.MessageHandlers.Insert(0, new ServerCompressionHandler(0, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance)));
+            config.MessageHandlers.Insert(0, new ServerCompressionHandler(0, new GZipCompressor(RecyclableStreamManager.Instance), new DeflateCompressor(RecyclableStreamManager.Instance)));
 
             // Configure error details policy
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;

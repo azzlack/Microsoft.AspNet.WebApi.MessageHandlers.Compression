@@ -19,19 +19,19 @@
             bool handleContentEncoding = true,
             bool handleChangedValues = false)
         {
-            // Remove headers we are going to rewrite and headers with null values
+            // Copy all other headers unless they have been modified and we want to preserve that
             foreach (var header in source)
             {
                 try
                 {
                     if (!handleContentLength && header.Key.Equals("Content-Length", StringComparison.OrdinalIgnoreCase))
                     {
-                        return;
+                        continue;
                     }
 
                     if (!handleContentEncoding && header.Key.Equals("Content-Encoding", StringComparison.OrdinalIgnoreCase))
                     {
-                        return;
+                        continue;
                     }
 
                     if (!handleChangedValues)
@@ -41,7 +41,7 @@
                         {
                             if (target.GetValues(header.Key).Any(targetValue => header.Value.Any(originalValue => originalValue != targetValue)))
                             {
-                                return;
+                                continue;
                             }
                         }
                     }
