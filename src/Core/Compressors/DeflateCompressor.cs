@@ -12,6 +12,13 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DeflateCompressor" /> class.
         /// </summary>
+        public DeflateCompressor()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeflateCompressor" /> class.
+        /// </summary>
         /// <param name="streamManager">Manager for stream.</param>
         public DeflateCompressor(IStreamManager streamManager)
             : base(streamManager)

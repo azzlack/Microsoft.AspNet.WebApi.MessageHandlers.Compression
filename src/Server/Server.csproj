@@ -79,7 +79,7 @@
     <Compile Include="BaseServerCompressionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerCompressionHandler.cs" />
-    <Compile Include="StreamManager.cs" />
+    <Compile Include="RecyclableStreamManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

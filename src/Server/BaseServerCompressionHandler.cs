@@ -94,7 +94,7 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
             this.Compressors = compressors;
             this.contentSizeThreshold = contentSizeThreshold;
             this.httpContentOperations = new HttpContentOperations();
-            this.streamManager = new StreamManager();
+            this.streamManager = new RecyclableStreamManager();
 
             this.enableCompression = enableCompression ?? (x =>
             {

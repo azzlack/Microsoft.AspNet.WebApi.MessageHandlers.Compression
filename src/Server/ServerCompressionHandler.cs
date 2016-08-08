@@ -16,7 +16,7 @@
         /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
         /// </summary>
         public ServerCompressionHandler()
-            : base(null, 860, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance))
+            : base(null, 860, new GZipCompressor(RecyclableStreamManager.Instance), new DeflateCompressor(RecyclableStreamManager.Instance))
         {
         }
 

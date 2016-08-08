@@ -18,6 +18,12 @@ namespace System.Net.Http.Extensions.Compression.Core.Compressors
         private readonly IStreamManager streamManager;
 
         /// <summary>Initializes a new instance of the <see cref="BaseCompressor" /> class.</summary>
+        protected BaseCompressor()
+        {
+            this.streamManager = StreamManager.Instance;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="BaseCompressor" /> class.</summary>
         /// <param name="streamManager">The stream manager.</param>
         protected BaseCompressor(IStreamManager streamManager)
         {

@@ -72,7 +72,7 @@
                 config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
 
                 // Add compression message handler
-                config.MessageHandlers.Insert(0, new OwinServerCompressionHandler(0, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance)));
+                config.MessageHandlers.Insert(0, new OwinServerCompressionHandler(0, new GZipCompressor(), new DeflateCompressor()));
 
                 appBuilder.UseCookieAuthentication(
                     new CookieAuthenticationOptions()

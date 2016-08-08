@@ -10,6 +10,11 @@
     public class GZipCompressor : BaseCompressor
     {
         /// <summary>Initializes a new instance of the <see cref="GZipCompressor" /> class.</summary>
+        public GZipCompressor()
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="GZipCompressor" /> class.</summary>
         /// <param name="streamManager">Manager for stream.</param>
         public GZipCompressor(IStreamManager streamManager)
             : base(streamManager)

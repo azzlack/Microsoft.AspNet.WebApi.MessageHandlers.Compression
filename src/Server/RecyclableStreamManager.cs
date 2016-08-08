@@ -6,17 +6,17 @@
     using Microsoft.IO;
 
     /// <summary>Manager for streams.</summary>
-    public class StreamManager : IStreamManager
+    public class RecyclableStreamManager : IStreamManager
     {
         private readonly RecyclableMemoryStreamManager recyclableMemoryStreamManager;
 
-        /// <summary>Initializes a new instance of the <see cref="StreamManager" /> class.</summary>
-        public StreamManager()
+        /// <summary>Initializes a new instance of the <see cref="RecyclableStreamManager" /> class.</summary>
+        public RecyclableStreamManager()
         {
             this.recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
         }
 
-        public static IStreamManager Instance { get; } = new StreamManager();
+        public static IStreamManager Instance { get; } = new RecyclableStreamManager();
 
         public Stream GetStream(string tag = null)
         {

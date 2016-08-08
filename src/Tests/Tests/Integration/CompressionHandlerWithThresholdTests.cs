@@ -40,7 +40,7 @@
         [SetUp]
         public void SetUp()
         {
-            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance)));
+            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor()));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
 
