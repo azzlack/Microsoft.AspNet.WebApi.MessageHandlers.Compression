@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net.Http;
+    using System.Net.Http.Extensions.Compression.Core.Compressors;
     using System.Net.Http.Extensions.Compression.Core.Interfaces;
     using System.Threading;
     using System.Threading.Tasks;
@@ -11,6 +12,14 @@
     /// </summary>
     public class ServerCompressionHandler : BaseServerCompressionHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        public ServerCompressionHandler()
+            : base(null, 860, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance))
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
         /// </summary>

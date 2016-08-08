@@ -58,6 +58,7 @@
     <Compile Include="Extensions\HttpContentHeaderExtensions.cs" />
     <Compile Include="HttpContentOperations.cs" />
     <Compile Include="Interfaces\ICompressor.cs" />
+    <Compile Include="Interfaces\IStreamManager.cs" />
     <Compile Include="Models\CompressedContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -2,12 +2,22 @@
 {
     using System.IO;
     using System.IO.Compression;
+    using System.Net.Http.Extensions.Compression.Core.Interfaces;
 
     /// <summary>
     /// Compressor for handling <c>deflate</c> encodings.
     /// </summary>
     public class DeflateCompressor : BaseCompressor
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeflateCompressor" /> class.
+        /// </summary>
+        /// <param name="streamManager">Manager for stream.</param>
+        public DeflateCompressor(IStreamManager streamManager)
+            : base(streamManager)
+        {
+        }
+
         /// <summary>
         /// Gets the encoding type.
         /// </summary>
