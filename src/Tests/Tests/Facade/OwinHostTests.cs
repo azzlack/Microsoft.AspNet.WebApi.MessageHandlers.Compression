@@ -20,6 +20,8 @@
     using System.Text;
     using System.Web.Http;
 
+    using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
+
     [TestFixture]
     public class OwinHostTests : TestFixture
     {
@@ -34,7 +36,7 @@
         [SetUp]
         public void SetUp()
         {
-            var client = new HttpClient(new TraceMessageHandler(new ClientCompressionHandler(this.server.Handler, new GZipCompressor(), new DeflateCompressor())))
+            var client = new HttpClient(new TraceMessageHandler(new ClientCompressionHandler(this.server.Handler, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance))))
             {
                 BaseAddress = new Uri("http://localhost:55399")
             };
@@ -70,7 +72,7 @@
                 config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
 
                 // Add compression message handler
-                config.MessageHandlers.Insert(0, new OwinServerCompressionHandler(0, new GZipCompressor(), new DeflateCompressor()));
+                config.MessageHandlers.Insert(0, new OwinServerCompressionHandler(0, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance)));
 
                 appBuilder.UseCookieAuthentication(
                     new CookieAuthenticationOptions()

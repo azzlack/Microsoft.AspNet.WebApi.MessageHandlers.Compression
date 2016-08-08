@@ -28,7 +28,7 @@
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
-            config.MessageHandlers.Insert(0, new ServerCompressionHandler(0, new GZipCompressor(), new DeflateCompressor()));
+            config.MessageHandlers.Insert(0, new ServerCompressionHandler(0, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance)));
 
             this.server = new HttpServer(config);
         }
@@ -36,7 +36,7 @@
         [SetUp]
         public void SetUp()
         {
-            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(), new DeflateCompressor()));
+            var client = new HttpClient(new ClientCompressionHandler(this.server, 0, new GZipCompressor(StreamManager.Instance), new DeflateCompressor(StreamManager.Instance)));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
 

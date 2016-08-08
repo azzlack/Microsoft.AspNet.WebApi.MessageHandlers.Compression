@@ -12,6 +12,8 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
     using System.Threading;
     using System.Threading.Tasks;
 
+    using Microsoft.IO;
+
     /// <summary>
     /// Base message handler for handling gzip/deflate requests/responses.
     /// </summary>
@@ -31,6 +33,9 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
         /// Custom delegate to enable or disable compression.
         /// </summary>
         private readonly Predicate<HttpRequestMessage> enableCompression;
+
+        /// <summary>Manager for recyclable streams.</summary>
+        private readonly IStreamManager streamManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
@@ -89,6 +94,7 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
             this.Compressors = compressors;
             this.contentSizeThreshold = contentSizeThreshold;
             this.httpContentOperations = new HttpContentOperations();
+            this.streamManager = new StreamManager();
 
             this.enableCompression = enableCompression ?? (x =>
             {

@@ -21,6 +21,7 @@ Please note that this is not an official Microsoft package.
     <copyright>Copyright EyeCatch 2016</copyright>
     <dependencies>
         <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.0" />
+        <dependency id="Microsoft.IO.RecyclableMemoryStream" version="1.1.0" />
     </dependencies>
     <references></references>
     <tags>aspnet webapi aspnetwebapi http compression gzip deflate eyecatch</tags>

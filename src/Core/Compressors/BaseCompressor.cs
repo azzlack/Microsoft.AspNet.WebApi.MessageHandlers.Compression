@@ -14,6 +14,16 @@ namespace System.Net.Http.Extensions.Compression.Core.Compressors
     /// </remarks>
     public abstract class BaseCompressor : ICompressor
     {
+        /// <summary>Manager for stream.</summary>
+        private readonly IStreamManager streamManager;
+
+        /// <summary>Initializes a new instance of the <see cref="BaseCompressor" /> class.</summary>
+        /// <param name="streamManager">The stream manager.</param>
+        protected BaseCompressor(IStreamManager streamManager)
+        {
+            this.streamManager = streamManager;
+        }
+
         /// <summary>
         /// Gets the encoding type.
         /// </summary>
@@ -42,7 +52,7 @@ namespace System.Net.Http.Extensions.Compression.Core.Compressors
         /// <returns>An async void.</returns>
         public virtual async Task<long> Compress(Stream source, Stream destination)
         {
-            using (var mem = new MemoryStream())
+            using (var mem = this.streamManager.GetStream())
             {
                 using (var gzip = this.CreateCompressionStream(mem))
                 {
