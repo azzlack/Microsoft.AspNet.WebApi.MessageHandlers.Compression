@@ -8,7 +8,7 @@ namespace System.Net.Http.Extensions.Compression.Core.Compressors
     /// Base compressor for compressing streams.
     /// </summary>
     /// <remarks>
-    /// Based on the work by: 
+    /// Based on the work by:
     ///     Ben Foster (http://benfoster.io/blog/aspnet-web-api-compression)
     ///     Kiran Challa (http://blogs.msdn.com/b/kiranchalla/archive/2012/09/04/handling-compression-accept-encoding-sample.aspx)
     /// </remarks>
@@ -67,11 +67,7 @@ namespace System.Net.Http.Extensions.Compression.Core.Compressors
 
                 mem.Position = 0;
 
-                var compressed = new byte[mem.Length];
-                await mem.ReadAsync(compressed, 0, compressed.Length);
-
-                var outStream = new MemoryStream(compressed);
-                await outStream.CopyToAsync(destination);
+                await mem.CopyToAsync(destination);
 
                 return mem.Length;
             }
