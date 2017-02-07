@@ -19,6 +19,12 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
     /// </summary>
     public abstract class BaseServerCompressionHandler : DelegatingHandler
     {
+
+        /// <summary>
+        /// true to attempt to marshal the continuation back to the original context captured; default is false.
+        /// </summary>
+        private readonly bool continueOnCapturedContext;
+
         /// <summary>
         /// The content size threshold before compressing.
         /// </summary>
@@ -42,7 +48,17 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
         /// </summary>
         /// <param name="compressors">The compressors.</param>
         protected BaseServerCompressionHandler(params ICompressor[] compressors)
-            : this(null, 860, null, compressors)
+            : this(null, 860, null, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        protected BaseServerCompressionHandler(bool continueOnCapturedContext, params ICompressor[] compressors)
+            : this(null, 860, null, continueOnCapturedContext, compressors)
         {
         }
 
@@ -52,7 +68,18 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="compressors">The compressors.</param>
         protected BaseServerCompressionHandler(int contentSizeThreshold, params ICompressor[] compressors)
-            : this(null, contentSizeThreshold, null, compressors)
+            : this(null, contentSizeThreshold, null, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
+        /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        protected BaseServerCompressionHandler(int contentSizeThreshold, bool continueOnCapturedContext, params ICompressor[] compressors)
+            : this(null, contentSizeThreshold, null, continueOnCapturedContext, compressors)
         {
         }
 
@@ -62,7 +89,18 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
         /// <param name="innerHandler">The inner handler.</param>
         /// <param name="compressors">The compressors.</param>
         protected BaseServerCompressionHandler(HttpMessageHandler innerHandler, params ICompressor[] compressors)
-            : this(innerHandler, 860, null, compressors)
+            : this(innerHandler, 860, null, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="innerHandler">The inner handler.</param>
+        /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        protected BaseServerCompressionHandler(HttpMessageHandler innerHandler, bool continueOnCapturedContex, params ICompressor[] compressors)
+            : this(innerHandler, 860, null, continueOnCapturedContex, compressors)
         {
         }
 
@@ -73,7 +111,20 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="compressors">The compressors.</param>
         protected BaseServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold, params ICompressor[] compressors)
-            : this(innerHandler, contentSizeThreshold, null, compressors)
+            : this(innerHandler, contentSizeThreshold, null, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="innerHandler">The inner handler.</param>
+        /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
+        /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        protected BaseServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold,
+            bool continueOnCapturedContex, params ICompressor[] compressors)
+            : this(innerHandler, contentSizeThreshold, null, continueOnCapturedContex, compressors)
         {
         }
 
@@ -84,13 +135,30 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="enableCompression">Custom delegate to enable or disable compression.</param>
         /// <param name="compressors">The compressors.</param>
-        protected BaseServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold, Predicate<HttpRequestMessage> enableCompression, params ICompressor[] compressors)
+        protected BaseServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold,
+            Predicate<HttpRequestMessage> enableCompression, params ICompressor[] compressors)
+            : this(innerHandler, contentSizeThreshold, enableCompression, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="innerHandler">The inner handler.</param>
+        /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
+        /// <param name="enableCompression">Custom delegate to enable or disable compression.</param>
+        /// /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        protected BaseServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold,
+            Predicate<HttpRequestMessage> enableCompression, bool continueOnCapturedContext,
+            params ICompressor[] compressors)
         {
             if (innerHandler != null)
             {
                 this.InnerHandler = innerHandler;
             }
 
+            this.continueOnCapturedContext = continueOnCapturedContext;
             this.Compressors = compressors;
             this.contentSizeThreshold = contentSizeThreshold;
             this.httpContentOperations = new HttpContentOperations();
@@ -145,11 +213,11 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
         /// <param name="request">The HTTP request message to send to the server.</param><param name="cancellationToken">A cancellation token to cancel operation.</param><exception cref="T:System.ArgumentNullException">The <paramref name="request"/> was null.</exception>
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            request = await this.HandleRequest(request, cancellationToken).ConfigureAwait(false);
+            request = await this.HandleRequest(request, cancellationToken).ConfigureAwait(continueOnCapturedContext);
 
-            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(continueOnCapturedContext);
 
-            return await this.HandleResponse(request, response, cancellationToken).ConfigureAwait(false);
+            return await this.HandleResponse(request, response, cancellationToken).ConfigureAwait(continueOnCapturedContext);
         }
 
         /// <summary>Handles the decompression if applicable.</summary>
@@ -262,7 +330,7 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
             {
                 try
                 {
-                    request.Content = await this.httpContentOperations.DecompressContent(request.Content, compressor).ConfigureAwait(false);
+                    request.Content = await this.httpContentOperations.DecompressContent(request.Content, compressor).ConfigureAwait(continueOnCapturedContext);
                 }
                 catch (Exception ex)
                 {
