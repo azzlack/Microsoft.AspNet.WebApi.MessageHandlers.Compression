@@ -25,7 +25,17 @@
         /// </summary>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(params ICompressor[] compressors)
-            : base(null, 860, null, compressors)
+            : base(null, 860, null, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        public ServerCompressionHandler(bool continueOnCapturedContext, params ICompressor[] compressors)
+            : base(null, 860, null, continueOnCapturedContext, compressors)
         {
         }
 
@@ -35,7 +45,18 @@
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(int contentSizeThreshold, params ICompressor[] compressors)
-            : base(null, contentSizeThreshold, null, compressors)
+            : base(null, contentSizeThreshold, null, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
+        /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        public ServerCompressionHandler(int contentSizeThreshold, bool continueOnCapturedContext, params ICompressor[] compressors)
+            : base(null, contentSizeThreshold, null, continueOnCapturedContext, compressors)
         {
         }
 
@@ -45,7 +66,18 @@
         /// <param name="innerHandler">The inner handler.</param>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(HttpMessageHandler innerHandler, params ICompressor[] compressors)
-            : base(innerHandler, 860, null, compressors)
+            : base(innerHandler, 860, null, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="innerHandler">The inner handler.</param>
+        /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        public ServerCompressionHandler(HttpMessageHandler innerHandler, bool continueOnCapturedContext, params ICompressor[] compressors)
+            : base(innerHandler, 860, null, continueOnCapturedContext, compressors)
         {
         }
 
@@ -56,7 +88,19 @@
         /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold, params ICompressor[] compressors)
-            : base(innerHandler, contentSizeThreshold, null, compressors)
+            : base(innerHandler, contentSizeThreshold, null, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="innerHandler">The inner handler.</param>
+        /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
+        /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        public ServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold, bool continueOnCapturedContext, params ICompressor[] compressors)
+            : base(innerHandler, contentSizeThreshold, null, continueOnCapturedContext, compressors)
         {
         }
 
@@ -68,7 +112,22 @@
         /// <param name="enableCompression">Custom delegate to enable or disable compression.</param>
         /// <param name="compressors">The compressors.</param>
         public ServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold, Predicate<HttpRequestMessage> enableCompression, params ICompressor[] compressors)
-            : base(innerHandler, contentSizeThreshold, enableCompression, compressors)
+            : base(innerHandler, contentSizeThreshold, enableCompression, false, compressors)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
+        /// </summary>
+        /// <param name="innerHandler">The inner handler.</param>
+        /// <param name="contentSizeThreshold">The content size threshold before compressing.</param>
+        /// <param name="enableCompression">Custom delegate to enable or disable compression.</param>
+        /// <param name="continueOnCapturedContext">ConfigureAwait value.</param>
+        /// <param name="compressors">The compressors.</param>
+        public ServerCompressionHandler(HttpMessageHandler innerHandler, int contentSizeThreshold,
+            Predicate<HttpRequestMessage> enableCompression, bool continueOnCapturedContext,
+            params ICompressor[] compressors)
+            : base(innerHandler, contentSizeThreshold, enableCompression, continueOnCapturedContext, compressors)
         {
         }
 
