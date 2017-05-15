@@ -146,6 +146,7 @@
     <Compile Include="Tests\Common\TestFixture.cs" />
     <Compile Include="Tests\Facade\OwinHostTests.cs" />
     <Compile Include="Tests\Integration\CompressionHandlerWithoutThresholdTests.cs" />
+    <Compile Include="Tests\Integration\AcceptEncodingStarCompressionHandlerWithThresholdTests.cs" />
     <Compile Include="Tests\Integration\CompressionHandlerWithThresholdTests.cs" />
   </ItemGroup>
   <ItemGroup>
