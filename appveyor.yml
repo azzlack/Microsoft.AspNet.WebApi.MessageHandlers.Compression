@@ -11,6 +11,6 @@ before_build:
 - cmd: nuget restore src\Microsoft.AspNet.WebApi.MessageHandlers.Compression.sln
 build:
   project: src\Microsoft.AspNet.WebApi.MessageHandlers.Compression.sln
-  verbosity: minimal'
+  verbosity: minimal
 cache:
   - packages -> **\packages.config
