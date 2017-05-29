@@ -1,0 +1,16 @@
+version: 2.1.0
+configuration: Release
+platform: Any CPU
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}.{build}'
+  assembly_informational_version: '{version}.{build}-{branch}'
+before_build:
+- cmd: nuget restore src\Microsoft.AspNet.WebApi.MessageHandlers.Compression.sln
+build:
+  project: src\Microsoft.AspNet.WebApi.MessageHandlers.Compression.sln
+  verbosity: minimal'
+cache:
+  - packages -> **\packages.config
