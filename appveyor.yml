@@ -1,12 +1,18 @@
-version: 2.1.0
+version: 2.1.{build}
+branches:
+  only:
+  - develop
 configuration: Release
 platform: Any CPU
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}.{build}'
-  assembly_informational_version: '{version}.{build}-{branch}'
+  assembly_version: $(Major).$(Minor).0
+  assembly_file_version: $(Major).$(Minor).0.{build}
+  assembly_informational_version: $(Major).$(Minor).0.{build}-{branch}
+environment:
+  Major: 2
+  Minor: 1
 before_build:
 - cmd: nuget restore src\Microsoft.AspNet.WebApi.MessageHandlers.Compression.sln
 build:
