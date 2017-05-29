@@ -1,5 +1,8 @@
 Compression support for ASP.NET WebAPI and HttpClient
 ===================================================
+[![Build status](https://ci.appveyor.com/api/projects/status/a4u9vjftr5cf5hja?svg=true)](https://ci.appveyor.com/project/azzlack/microsoft-aspnet-webapi-messagehandlers-compressio)
+
+
 Drop-in module for ASP.Net WebAPI that enables `GZip` and `Deflate` support.  
 This module is based on [this blog post by Ben Foster](http://benfoster.io/blog/aspnet-web-api-compression) which in turn is based on this blog post by [Kiran Challa](http://blogs.msdn.com/b/kiranchalla/archive/2012/09/04/handling-compression-accept-encoding-sample.aspx).  
 This code improves on their work by adding several new options, as well as fixing some issues with the original code.
