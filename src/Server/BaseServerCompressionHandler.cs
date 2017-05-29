@@ -167,7 +167,7 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
             this.enableCompression = enableCompression ?? (x =>
             {
                 // If request does not accept gzip or deflate, return false
-                if (x.Headers.AcceptEncoding.All(y => y.Value != "gzip" && y.Value != "deflate"))
+                if (x.Headers.AcceptEncoding.All(y => y.Value != "gzip" && y.Value != "deflate" && y.Value!="*"))
                 {
                     return false;
                 }
@@ -279,14 +279,22 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
             // As per RFC2616.14.3:
             // Ignores encodings with quality == 0
             // If multiple content-codings are acceptable, then the acceptable content-coding with the highest non-zero qvalue is preferred.
-            var compressor = (from encoding in request.Headers.AcceptEncoding
+            // Manage the Accept-Encoding: * by using the first compressor
+            ICompressor compressor = null;
+
+            if ( request.Headers.AcceptEncoding.FirstOrDefault(w => w.Value == "*") != null )
+            {
+                compressor=Compressors.FirstOrDefault();
+            }
+            else
+            {
+                compressor = (from encoding in request.Headers.AcceptEncoding
                               let quality = encoding.Quality ?? 1.0
                               where quality > 0
-                              join c in this.Compressors on encoding.Value.ToLowerInvariant() equals
-                                  c.EncodingType.ToLowerInvariant()
+                              join c in this.Compressors on encoding.Value.ToLowerInvariant() equals c.EncodingType.ToLowerInvariant()
                               orderby quality descending
                               select c).FirstOrDefault();
-
+            }
             if (compressor != null)
             {
                 try
