@@ -40,28 +40,11 @@
 
         [Compression(Enabled = false)]
         [Route("api/file/uncompressedimage")]
-        public async Task<HttpResponseMessage> GetUncompressedImage()
-        {
-            using (var ms = new MemoryStream())
-            {
-                var baseDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent;
-                var filePath = baseDir.FullName + "/Content/Images/app-icon-1024.png";
-
-                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                {
-                    fs.Position = 0;
-                    await fs.CopyToAsync(ms);
-                }
-
-                var result = new HttpResponseMessage(HttpStatusCode.OK)
-                {
-                    Content = new ByteArrayContent(ms.ToArray())
-                };
-                result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-
-                return result;
-            }
-        }
+        public Task<HttpResponseMessage> GetUncompressedImage() => GetImage();
+        
+        [Compression(Enabled = true)]
+        [Route("api/file/compressedimage")]
+        public Task<HttpResponseMessage> GetCompressedImage() => GetImage();
 
         [Route("api/file/pdf")]
         public async Task<HttpResponseMessage> GetPdf()
