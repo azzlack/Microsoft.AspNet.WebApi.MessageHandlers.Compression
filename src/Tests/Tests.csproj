@@ -148,6 +148,7 @@
     <Compile Include="Tests\Integration\CompressionHandlerWithoutThresholdTests.cs" />
     <Compile Include="Tests\Integration\AcceptEncodingStarCompressionHandlerWithThresholdTests.cs" />
     <Compile Include="Tests\Integration\CompressionHandlerWithThresholdTests.cs" />
+    <Compile Include="Tests\Integration\DisabledCompressionHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

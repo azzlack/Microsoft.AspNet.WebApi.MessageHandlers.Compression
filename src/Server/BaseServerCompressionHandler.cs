@@ -44,6 +44,12 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
         private readonly IStreamManager streamManager;
 
         /// <summary>
+        /// Is compression enabled by default.
+        /// </summary>
+        /// <returns><c>true</c> if compression is enabled by default; otherwise, <c>false</c>. The default is <c>true</c>.</returns>
+        public bool IsCompressionEnabled { get; set; } = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ServerCompressionHandler" /> class.
         /// </summary>
         /// <param name="compressors">The compressors.</param>
@@ -181,7 +187,7 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
                     return enable;
                 }
 
-                return true;
+                return IsCompressionEnabled;
             });
         }
 
