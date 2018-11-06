@@ -242,6 +242,9 @@ namespace Microsoft.AspNet.WebApi.Extensions.Compression.Server
         /// <returns>The response, compressed if applicable.</returns>
         public virtual async Task<HttpResponseMessage> HandleCompression(HttpRequestMessage request, HttpResponseMessage response, CancellationToken cancellationToken)
         {
+            // sometimes in a cancelled call response is null
+            if (response == null) return response;
+            
             // Check if response should be compressed
             // NOTE: This must be done _after_ the response has been created, otherwise the EnableCompression property is not set
             var process = this.enableCompression(request);
